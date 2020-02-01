@@ -16,6 +16,13 @@
       subPoints = [{item:Text, status: BooleanValue}, {item:Text, status: BooleanValue}]
     },
   ]
+--working-- create server
+            create lib for 
+--done--  app class
+            handler
+            responses
+--done--  mimeTypes
+--done--  statusCodes
 
 Create one or more to-do list with a title
 View all the to-do lists
