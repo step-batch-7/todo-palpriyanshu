@@ -1,3 +1,22 @@
+## data ##
+  title
+    todoList
+      items
+        option to Create and delete an item 
+        mechanism to mark an item as done and undone
+  
+## dataStructure ##
+  [
+    {
+      heading :name;
+      subPoints = [{item:Text, status: BooleanValue}, {item:Text, status: BooleanValue}]
+    },
+    {
+      heading :name;
+      subPoints = [{item:Text, status: BooleanValue}, {item:Text, status: BooleanValue}]
+    },
+  ]
+
 Create one or more to-do list with a title
 View all the to-do lists
 Add an item to a to-do list
