@@ -57,3 +57,22 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+#titleBar {
+  width: 100%;
+  height: 5%;
+  font-size: 18px;
+  font-weight: 200;
+  background-color: rgb(95, 161, 248);
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 2%;
+}
+
+.project {
+  width: 100%;
+  height: 2%;
+  background-color: #555555;
+  margin: 2px;
+}
