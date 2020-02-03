@@ -9,10 +9,3 @@ const hideIndex = function() {
   document.getElementById('textArea').style.width = '1170px';
   index.style.display = 'block';
 };
-
-const addProject = function() {
-  const newProject = document.createElement('div');
-  const projectList = document.getElementById('index');
-  newProject.classList.add('project');
-  projectList.appendChild(newProject);
-};

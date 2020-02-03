@@ -9,18 +9,21 @@
   </head>
   <body class="body">
     <div id="textArea">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde nulla
-        corrupti sint debitis, corporis impedit soluta dolorum eum aliquam
-        fugiat pariatur quaerat veniam animi quia ad natus nobis, maiores
-        deleniti.
-      </p>
+      <h2>MY TASKS</h2>
+      <form class="title">
+        <input type="checkbox" />
+        <input type="text" class="heading" />
+      </form>
     </div>
     <div id="index" class="index" id="noIndex">
       <div id="titleBar">
         <p>todo</p>
-        <img src="../images/plusSign.png" width="20%" onclick="addProject()" />
       </div>
+      <form method="POST" class="project">
+        <input placeholder="add Title" name="title" type="text" />
+        <input type="submit" value="save" />
+      </form>
+      __ProjectName__
     </div>
     <div class="sideBar">
       <img src="../images/folder.png" width="50px" onClick="hideIndex()" />
