@@ -11,10 +11,12 @@
   <body class="body">
     <div id="textArea">
       <h2>MY TASKS</h2>
-      <form class="title">
-        <input type="checkbox" />
-        <input type="text" class="heading" />
-      </form>
+      <div id="taskInput">
+        <form class="title" method="POST">
+          <input type="text" class="heading" id="task" required />
+          <img src="../images/signPlus.png" width="4%" id="addButton" />
+        </form>
+      </div>
     </div>
 
     <div id="index" class="index" id="noIndex">
@@ -23,7 +25,7 @@
       </div>
       <form method="POST" class="project">
         <input placeholder="add Title" type="text" id="titlePlace" required />
-        <input type="button" value="save" onclick="xhrRequest()" />
+        <input type="button" value="save" onclick="titleRequest()" />
       </form>
     </div>
 
