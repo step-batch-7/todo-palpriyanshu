@@ -8,10 +8,12 @@
 ## dataStructure ##
   [
     {
+      id:1
       title :shopping;
       items : [{item: buy dress, done: true}, {item:buy shoes, done: false}]
     },
     {
+      id:2
       title :attend wedding;
       items : [{item:book tickets, done: true}, {item:buy shagun gift, done:false }]
     },
@@ -27,7 +29,7 @@
   append this data to older todoList
 
 ## delete todoList
-     
+
 
 --working-- create server
             create lib for 
