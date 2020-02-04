@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" />
-    <script src="../js/todoPage.js"></script>
+    <script src="../lib/todoPage.js"></script>
+    <script src="../js/xhr.js"></script>
     <title>todo</title>
   </head>
   <body class="body">
@@ -15,16 +16,17 @@
         <input type="text" class="heading" />
       </form>
     </div>
+
     <div id="index" class="index" id="noIndex">
       <div id="titleBar">
         <p>todo</p>
       </div>
       <form method="POST" class="project">
-        <input placeholder="add Title" name="title" type="text" />
-        <input type="submit" value="save" />
+        <input placeholder="add Title" type="text" id="titlePlace" required />
+        <input type="button" value="save" onclick="xhrRequest()" />
       </form>
-      __ProjectName__
     </div>
+
     <div class="sideBar">
       <img src="../images/folder.png" width="50px" onClick="hideIndex()" />
     </div>

@@ -8,14 +8,27 @@
 ## dataStructure ##
   [
     {
-      heading :name;
-      subPoints = [{item:Text, status: BooleanValue}, {item:Text, status: BooleanValue}]
+      title :shopping;
+      items : [{item: buy dress, done: true}, {item:buy shoes, done: false}]
     },
     {
-      heading :name;
-      subPoints = [{item:Text, status: BooleanValue}, {item:Text, status: BooleanValue}]
+      title :attend wedding;
+      items : [{item:book tickets, done: true}, {item:buy shagun gift, done:false }]
     },
   ]
+
+## save todoList
+  data
+    {
+      title :come back for work;
+      items : [{item: book tickets, done: true}]
+    }
+  take older todoList 
+  append this data to older todoList
+
+## delete todoList
+     
+
 --working-- create server
             create lib for 
 --done--  app class
