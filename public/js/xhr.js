@@ -1,6 +1,10 @@
 const renderItems = function() {
   const button = document.getElementById('addButton');
   const id = event.target.id;
+  const itemBlock = document.getElementById('items');
+  if (itemBlock.innerText) {
+    itemBlock.innerText = '';
+  }
   const callBack = function() {
     button.onclick = taskRequest.bind(null, id);
   };
@@ -29,7 +33,7 @@ const taskRequest = function(id) {
 
   // eslint-disable-next-line max-statements
   const callBack = function() {
-    const textArea = document.getElementById('textArea');
+    const itemBlock = document.getElementById('items');
     const block = document.createElement('div');
     block.classList.add('display');
     const item = document.createElement('div');
@@ -39,7 +43,7 @@ const taskRequest = function(id) {
     checkBox.classList.add('check');
     block.appendChild(checkBox);
     block.appendChild(item);
-    textArea.appendChild(block);
+    itemBlock.appendChild(block);
     item.innerText = task;
   };
 
