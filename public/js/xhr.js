@@ -1,3 +1,11 @@
+const appendChildToParent = function(parentChildList) {
+  parentChildList.forEach(([parent, child]) => parent.appendChild(child));
+};
+
+const addClass = function(classList) {
+  classList.forEach(([element, className]) => element.classList.add(className));
+};
+
 const renderItems = function() {
   const button = document.getElementById('addButton');
   const id = event.target.id;
@@ -31,19 +39,24 @@ const titleRequest = function() {
 const taskRequest = function(id) {
   const task = document.getElementById('task').value;
 
-  // eslint-disable-next-line max-statements
   const callBack = function() {
-    const itemBlock = document.getElementById('items');
     const block = document.createElement('div');
-    block.classList.add('display');
     const item = document.createElement('div');
-    item.classList.add('heading');
     const checkBox = document.createElement('input');
+    const itemBlock = document.getElementById('items');
     checkBox.setAttribute('type', 'checkBox');
-    checkBox.classList.add('check');
-    block.appendChild(checkBox);
-    block.appendChild(item);
-    itemBlock.appendChild(block);
+    const classElementPairs = [
+      [block, 'display'],
+      [item, 'heading'],
+      [checkBox, 'check']
+    ];
+    addClass(classElementPairs);
+    const parentChildList = [
+      [block, checkBox],
+      [block, item],
+      [itemBlock, block]
+    ];
+    appendChildToParent(parentChildList);
     item.innerText = task;
   };
 
