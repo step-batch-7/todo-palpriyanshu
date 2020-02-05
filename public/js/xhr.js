@@ -1,9 +1,13 @@
-const appendChildToParent = function(parentChildList) {
+const appendChildToParent = parentChildList => {
   parentChildList.forEach(([parent, child]) => parent.appendChild(child));
 };
 
-const addClass = function(classList) {
+const addClass = classList => {
   classList.forEach(([element, className]) => element.classList.add(className));
+};
+
+const createElements = elementList => {
+  return elementList.map(element => document.createElement(element));
 };
 
 const renderItems = function() {
@@ -20,7 +24,7 @@ const renderItems = function() {
 };
 
 const titleRequest = function() {
-  const title = document.getElementById('titlePlace').value;
+  const title = document.getElementById('titlePlace');
   const textArea = document.createElement('div');
   const titleId = `T_${new Date().getTime()}`;
   const callBack = function() {
@@ -28,21 +32,25 @@ const titleRequest = function() {
       textArea.onclick = renderItems;
       textArea.classList.add('project');
       textArea.id = titleId;
-      textArea.innerText = title;
+      textArea.innerText = title.value;
+      title.value = '';
       const index = document.getElementById('index');
       index.appendChild(textArea);
     }
   };
-  newRequest('POST', 'saveTitle', callBack, `title=${title}&id=${titleId}`);
+  newRequest(
+    'POST',
+    'saveTitle',
+    callBack,
+    `title=${title.value}&id=${titleId}`
+  );
 };
 
 const taskRequest = function(id) {
-  const task = document.getElementById('task').value;
+  const task = document.getElementById('task');
 
   const callBack = function() {
-    const block = document.createElement('div');
-    const item = document.createElement('div');
-    const checkBox = document.createElement('input');
+    const [block, item, checkBox] = createElements(['div', 'div', 'input']);
     const itemBlock = document.getElementById('items');
     checkBox.setAttribute('type', 'checkBox');
     const classElementPairs = [
@@ -57,10 +65,11 @@ const taskRequest = function(id) {
       [itemBlock, block]
     ];
     appendChildToParent(parentChildList);
-    item.innerText = task;
+    item.innerText = task.value;
+    task.value = '';
   };
 
-  newRequest('POST', 'saveTask', callBack, `task=${task}&titleId=${id}`);
+  newRequest('POST', 'saveTask', callBack, `task=${task.value}&titleId=${id}`);
 };
 
 const newRequest = function(method, url, callBack, reqMsg) {
@@ -69,3 +78,22 @@ const newRequest = function(method, url, callBack, reqMsg) {
   req.onload = callBack;
   req.send(reqMsg);
 };
+
+const hideIndex = function() {
+  const index = document.getElementById('index');
+  index.classList.toggle('index');
+  if (index.className !== 'index') {
+    index.style.display = 'none';
+    document.getElementById('textArea').style.width = '1370px';
+    return;
+  }
+  document.getElementById('textArea').style.width = '1170px';
+  index.style.display = 'block';
+};
+
+const attachEventListeners = () => {
+  document.getElementById('fold').addEventListener('click', hideIndex);
+  document.getElementById('save').addEventListener('click', titleRequest);
+};
+
+window.onload = attachEventListeners;
