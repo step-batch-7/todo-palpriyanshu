@@ -1,24 +1,30 @@
 const renderItems = function() {
   const button = document.getElementById('addButton');
-  button.onclick = taskRequest;
+  const id = event.target.id;
+  const callBack = function() {
+    button.onclick = taskRequest.bind(null, id);
+  };
+  newRequest('POST', 'loadTask', callBack, `id=${id}`);
 };
 
 const titleRequest = function() {
   const title = document.getElementById('titlePlace').value;
+  const textArea = document.createElement('div');
+  const titleId = `T_${new Date().getTime()}`;
   const callBack = function() {
     if (this.status === 201) {
-      const textArea = document.createElement('div');
       textArea.onclick = renderItems;
       textArea.classList.add('project');
+      textArea.id = titleId;
       textArea.innerText = title;
       const index = document.getElementById('index');
       index.appendChild(textArea);
     }
   };
-  newRequest('POST', 'saveTitle', callBack, `title=${title}`);
+  newRequest('POST', 'saveTitle', callBack, `title=${title}&id=${titleId}`);
 };
 
-const taskRequest = function() {
+const taskRequest = function(id) {
   const task = document.getElementById('task').value;
 
   // eslint-disable-next-line max-statements
@@ -37,7 +43,7 @@ const taskRequest = function() {
     item.innerText = task;
   };
 
-  newRequest('POST', 'saveTask', callBack, `task=${task}`);
+  newRequest('POST', 'saveTask', callBack, `task=${task}&titleId=${id}`);
 };
 
 const newRequest = function(method, url, callBack, reqMsg) {
