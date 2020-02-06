@@ -10,18 +10,41 @@ const createElements = elementList => {
   return elementList.map(element => document.createElement(element));
 };
 
+const hide = selector =>
+  document.querySelector(selector).classList.add('hidden');
+
+const show = selector =>
+  document.querySelector(selector).classList.remove('hidden');
+
 const displayTodo = function(todo) {
   return `
   <div class="display">
     <input type="checkBox" class="check">
     <div class="heading">${todo}</div>
+    <div class="delete"> del </div>
   </div>
 `;
 };
 
+const askToDelete = function(id) {
+  if (event.target.classList[0] === 'yes') {
+    const callBack = function() {
+      hide('.myTasks');
+    };
+    newRequest('POST', 'deleteTask', callBack, `titleId=${id}`);
+  }
+  hide('.dialogBox');
+};
+
+const deleteTodo = function() {
+  const id = event.target.id;
+  show('.dialogBox');
+  document.querySelector('.dialogBox').onclick = askToDelete.bind(null, id);
+};
+
 const renderTodos = function() {
   const button = document.getElementById('addButton');
-  document.querySelector('.myTasks').classList.remove('hidden');
+  show('.myTasks');
   const id = event.target.id;
   document.querySelector('.myTasks').id = `c.${id}`;
   const callBack = function() {
@@ -102,9 +125,10 @@ const renderIndex = function() {
 };
 
 const attachClickEventListeners = () => {
-  document.getElementById('fold').addEventListener('click', renderIndex);
-  document.getElementById('saveTitle').addEventListener('click', titleRequest);
-  document.getElementById('allTodos').addEventListener('click', renderTodos);
+  document.querySelector('#fold').addEventListener('click', renderIndex);
+  document.querySelector('#saveTitle').addEventListener('click', titleRequest);
+  document.querySelector('#allTodos').addEventListener('click', renderTodos);
+  document.querySelector('#allTodos').addEventListener('dblclick', deleteTodo);
 };
 
 window.onload = attachClickEventListeners;
