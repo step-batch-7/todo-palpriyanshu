@@ -12,10 +12,14 @@
       <h2>MY TASKS</h2>
       <div class="hidden myTasks">
         <div id="taskInput">
-          <form class="title" method="POST">
-            <input type="text" class="heading" id="task" required />
-            <img src="../images/plusSign.png" width="3%" id="addButton" />
-          </form>
+          <input
+            placeholder="add Task"
+            type="text"
+            class="heading"
+            id="task"
+            required
+          />
+          <img src="../images/plusSign.png" width="3%" id="addButton" />
         </div>
         <div id="todo"></div>
       </div>
@@ -25,10 +29,10 @@
       <div id="titleBar">
         <p>todo</p>
       </div>
-      <form method="POST" class="project">
+      <div class="project">
         <input placeholder="add Title" type="text" id="titlePlace" required />
         <input type="button" value="save" id="saveTitle" />
-      </form>
+      </div>
       <div class="dialogBox hidden">
         <p>Are you sure to delete</p>
         <input type="button" value="delete" class="yes button" />
