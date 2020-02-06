@@ -10,6 +10,10 @@ const createElements = elementList => {
   return elementList.map(element => document.createElement(element));
 };
 
+const getElements = selectorList => {
+  return selectorList.map(selector => document.querySelector(selector));
+};
+
 const hide = selector =>
   document.querySelector(selector).classList.add('hidden');
 
@@ -21,9 +25,9 @@ const displayTodo = function(todo) {
   <div class="display">
     <input type="checkBox" class="check">
     <div class="heading">${todo}</div>
-    <div class="delete"> del </div>
-  </div>
-`;
+    <div class="delete"> _ </div>
+    </div>
+    `;
 };
 
 const askToDelete = function(id) {
@@ -59,7 +63,7 @@ const renderTodos = function() {
 };
 
 const titleRequest = function() {
-  const title = document.getElementById('titlePlace');
+  const [title, allTodos] = getElements(['#titlePlace', '#allTodos']);
   const div = document.createElement('div');
   const titleId = `T_${new Date().getTime()}`;
   const callBack = function() {
@@ -68,7 +72,7 @@ const titleRequest = function() {
       div.id = titleId;
       div.innerText = title.value;
       title.value = '';
-      document.getElementById('allTodos').appendChild(div);
+      allTodos.appendChild(div);
     }
   };
   newRequest(
@@ -80,26 +84,35 @@ const titleRequest = function() {
 };
 
 const taskRequest = function(id) {
-  const task = document.getElementById('task');
+  const [task, todoBlock] = getElements(['#task', '#todo']);
 
   const callBack = function() {
-    const [block, todo, checkBox] = createElements(['div', 'div', 'input']);
-    const todoBlock = document.getElementById('todo');
+    const [block, todo, checkBox, eliminate] = createElements([
+      'div',
+      'div',
+      'input',
+      'div'
+    ]);
     checkBox.setAttribute('type', 'checkBox');
     const classElementPairs = [
       [block, 'display'],
       [todo, 'heading'],
-      [checkBox, 'check']
+      [checkBox, 'check'],
+      [eliminate, 'delete']
     ];
+
     addClass(classElementPairs);
     const parentChildList = [
       [block, checkBox],
       [block, todo],
+      [block, eliminate],
       [todoBlock, block]
     ];
     appendChildToParent(parentChildList);
     todo.innerText = task.value;
     task.value = '';
+    const taskList = document.querySelectorAll('.delete');
+    taskList[taskList.length - 1].innerHTML = '_';
   };
 
   newRequest('POST', 'saveTask', callBack, `task=${task.value}&titleId=${id}`);
