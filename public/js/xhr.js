@@ -10,32 +10,42 @@ const createElements = elementList => {
   return elementList.map(element => document.createElement(element));
 };
 
-const renderItems = function() {
+const displayTodo = function(todo) {
+  return `
+  <div class="display">
+    <input type="checkBox" class="check">
+    <div class="heading">${todo}</div>
+  </div>
+`;
+};
+
+const renderTodos = function() {
   const button = document.getElementById('addButton');
+  document.querySelector('.myTasks').classList.remove('hidden');
   const id = event.target.id;
-  const itemBlock = document.getElementById('items');
-  if (itemBlock.innerText) {
-    itemBlock.innerText = '';
-  }
+  document.querySelector('.myTasks').id = `c.${id}`;
   const callBack = function() {
+    if (this.status === 201) {
+      const todo = JSON.parse(this.response).tasks;
+      const totalTasks = todo.map(task => displayTodo(task)).join('\n');
+      document.getElementById('todo').innerHTML = totalTasks;
+    }
     button.onclick = taskRequest.bind(null, id);
   };
-  newRequest('POST', 'loadTask', callBack, `id=${id}`);
+  newRequest('POST', 'loadTask', callBack, `titleId=${id}`);
 };
 
 const titleRequest = function() {
   const title = document.getElementById('titlePlace');
-  const textArea = document.createElement('div');
+  const div = document.createElement('div');
   const titleId = `T_${new Date().getTime()}`;
   const callBack = function() {
     if (this.status === 201) {
-      textArea.onclick = renderItems;
-      textArea.classList.add('project');
-      textArea.id = titleId;
-      textArea.innerText = title.value;
+      div.classList.add('project');
+      div.id = titleId;
+      div.innerText = title.value;
       title.value = '';
-      const index = document.getElementById('index');
-      index.appendChild(textArea);
+      document.getElementById('allTodos').appendChild(div);
     }
   };
   newRequest(
@@ -50,22 +60,22 @@ const taskRequest = function(id) {
   const task = document.getElementById('task');
 
   const callBack = function() {
-    const [block, item, checkBox] = createElements(['div', 'div', 'input']);
-    const itemBlock = document.getElementById('items');
+    const [block, todo, checkBox] = createElements(['div', 'div', 'input']);
+    const todoBlock = document.getElementById('todo');
     checkBox.setAttribute('type', 'checkBox');
     const classElementPairs = [
       [block, 'display'],
-      [item, 'heading'],
+      [todo, 'heading'],
       [checkBox, 'check']
     ];
     addClass(classElementPairs);
     const parentChildList = [
       [block, checkBox],
-      [block, item],
-      [itemBlock, block]
+      [block, todo],
+      [todoBlock, block]
     ];
     appendChildToParent(parentChildList);
-    item.innerText = task.value;
+    todo.innerText = task.value;
     task.value = '';
   };
 
@@ -79,7 +89,7 @@ const newRequest = function(method, url, callBack, reqMsg) {
   req.send(reqMsg);
 };
 
-const hideIndex = function() {
+const renderIndex = function() {
   const index = document.getElementById('index');
   index.classList.toggle('index');
   if (index.className !== 'index') {
@@ -91,9 +101,10 @@ const hideIndex = function() {
   index.style.display = 'block';
 };
 
-const attachEventListeners = () => {
-  document.getElementById('fold').addEventListener('click', hideIndex);
-  document.getElementById('save').addEventListener('click', titleRequest);
+const attachClickEventListeners = () => {
+  document.getElementById('fold').addEventListener('click', renderIndex);
+  document.getElementById('saveTitle').addEventListener('click', titleRequest);
+  document.getElementById('allTodos').addEventListener('click', renderTodos);
 };
 
-window.onload = attachEventListeners;
+window.onload = attachClickEventListeners;

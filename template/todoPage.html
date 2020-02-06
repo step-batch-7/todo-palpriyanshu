@@ -10,13 +10,15 @@
   <body class="body">
     <div id="textArea">
       <h2>MY TASKS</h2>
-      <div id="taskInput">
-        <form class="title" method="POST">
-          <input type="text" class="heading" id="task" required />
-          <img src="../images/plusSign.png" width="3%" id="addButton" />
-        </form>
+      <div class="hidden myTasks">
+        <div id="taskInput">
+          <form class="title" method="POST">
+            <input type="text" class="heading" id="task" required />
+            <img src="../images/plusSign.png" width="3%" id="addButton" />
+          </form>
+        </div>
+        <div id="todo"></div>
       </div>
-      <div id="items"></div>
     </div>
 
     <div id="index" class="index" id="noIndex">
@@ -25,9 +27,11 @@
       </div>
       <form method="POST" class="project">
         <input placeholder="add Title" type="text" id="titlePlace" required />
-        <input type="button" value="save" id="save" />
+        <input type="button" value="save" id="saveTitle" />
       </form>
-      __Project__
+      <div id="allTodos">
+        __Project__
+      </div>
     </div>
 
     <div class="sideBar">
