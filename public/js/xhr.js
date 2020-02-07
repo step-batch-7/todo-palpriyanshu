@@ -34,7 +34,10 @@ const displayTodo = function(todo, id) {
 
 const askToDelete = function(titleId) {
   if (event.target.classList[0] === 'yes') {
-    const callBack = () => erase('.myTasks');
+    const callBack = () => {
+      erase('.myTasks');
+      erase(`#${titleId}`);
+    };
     newRequest('POST', 'deleteAllTodo', callBack, {titleId});
   }
   hide('.dialogBox');
