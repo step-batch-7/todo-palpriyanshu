@@ -1,11 +1,3 @@
-const appendChildToParent = parentChildList => {
-  parentChildList.forEach(([parent, child]) => parent.appendChild(child));
-};
-
-const addClass = classList => {
-  classList.forEach(([element, className]) => element.classList.add(className));
-};
-
 const hide = selector =>
   document.querySelector(selector).classList.add('hidden');
 
@@ -14,12 +6,16 @@ const show = selector =>
 
 const erase = selector => document.querySelector(selector).remove();
 
-const displayTodo = function(todo, taskId, titleId) {
+const displayTodo = function(todo, taskId, done) {
+  let checked = '';
+  if (done) {
+    checked = 'checked';
+  }
   return `
   <div class="display" id="${taskId}">
-    <input type="checkBox" class="check" onClick="updateStatus()">
+    <input type="checkBox" class="check" onClick="updateStatus()" ${checked}>
     <div class="heading">${todo}</div>
-    <div class="delete" onClick="deleteTask(${titleId})"> _ </div>
+    <div class="delete" onClick="deleteTask()"> _ </div>
   </div>
   `;
 };
@@ -60,7 +56,7 @@ const renderTodos = function() {
     if (this.status === 201) {
       const todo = JSON.parse(this.response).tasks;
       const totalTasks = todo
-        .map(task => displayTodo(task.task, task.taskId, titleId))
+        .map(task => displayTodo(task.task, task.taskId, task.done))
         .join('\n');
       document.getElementById('todo').innerHTML = totalTasks;
     }
@@ -88,7 +84,11 @@ const titleRequest = function() {
   newRequest('POST', 'saveTitle', callBack, {title: title.value});
 };
 
-const updateStatus = function(titleId) {
+const updateStatus = function() {
+  const titleId = document
+    .querySelector('.myTasks')
+    .id.split('.')
+    .pop();
   const taskId = event.target.parentElement.id;
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
@@ -100,40 +100,40 @@ const getCheckBox = function() {
   return checkBox;
 };
 
+const createDiv = () => document.createElement('div');
+const createBlockElements = function() {
+  const block = createDiv();
+  const todo = createDiv();
+  const eliminate = createDiv();
+  const checkBox = getCheckBox();
+  return [block, todo, eliminate, checkBox];
+};
+
+const createBlock = function(task, taskId) {
+  const [block, todo, eliminate, checkBox] = createBlockElements();
+  block.classList.add('display');
+  block.setAttribute('id', taskId);
+  todo.classList.add('heading');
+  eliminate.classList.add('delete');
+  block.appendChild(checkBox);
+  block.appendChild(todo);
+  block.appendChild(eliminate);
+  todo.innerText = task.value;
+  return block;
+};
+
 const taskRequest = function(titleId) {
   const [task, todoBlock] = ['task', 'todo'].map(id =>
     document.getElementById(id)
   );
-  // eslint-disable-next-line max-statements
   const callBack = function() {
-    const [block, todo, eliminate] = ['div', 'div', 'div'].map(div =>
-      document.createElement(div)
-    );
-    const checkBox = getCheckBox();
-
-    const classElementPairs = [
-      [block, 'display'],
-      [todo, 'heading'],
-      [eliminate, 'delete']
-    ];
-    addClass(classElementPairs);
-
     const taskId = JSON.parse(this.response);
-    block.setAttribute('id', taskId);
-    const parentChildList = [
-      [block, checkBox],
-      [block, todo],
-      [block, eliminate],
-      [todoBlock, block]
-    ];
-    appendChildToParent(parentChildList);
-    todo.innerText = task.value;
+    const block = createBlock(task, taskId);
+    todoBlock.appendChild(block);
     task.value = '';
-
     document.querySelectorAll('.check').forEach(task => {
-      task.onclick = updateStatus.bind(null, titleId);
+      task.onclick = updateStatus;
     });
-
     document.querySelectorAll('.delete').forEach(task => {
       task.innerHTML = '_';
       task.onclick = deleteTask.bind(null, titleId);
