@@ -25,7 +25,7 @@ const erase = selector => document.querySelector(selector).remove();
 const displayTodo = function(todo, id) {
   return `
   <div class="display" id="${id}">
-    <input type="checkBox" class="check">
+    <input type="checkBox" class="check" onClick="updateStatus">
     <div class="heading">${todo}</div>
     <div class="delete" onClick="deleteTask"> _ </div>
   </div>
@@ -92,6 +92,11 @@ const titleRequest = function() {
   newRequest('POST', 'saveTitle', callBack, {title: title.value});
 };
 
+const updateStatus = function(titleId) {
+  const taskId = event.target.parentElement.id;
+  newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
+};
+
 const taskRequest = function(titleId) {
   const [task, todoBlock] = getElements(['#task', '#todo']);
 
@@ -123,6 +128,11 @@ const taskRequest = function(titleId) {
     appendChildToParent(parentChildList);
     todo.innerText = task.value;
     task.value = '';
+
+    document.querySelectorAll('.check').forEach(task => {
+      task.onclick = updateStatus.bind(null, titleId);
+    });
+
     document.querySelectorAll('.delete').forEach(task => {
       task.innerHTML = '_';
       task.onclick = deleteTask.bind(null, titleId);

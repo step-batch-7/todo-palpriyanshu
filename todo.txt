@@ -39,9 +39,10 @@
 --done--  mimeTypes
 --done--  statusCodes
 
-Create one or more to-do list with a title
-View all the to-do lists
-Add an item to a to-do list
-Delete an item from to-do list
+--done-- Create one or more to-do list with a title
+--done-- View all the to-do lists
+--done-- Add an item to a to-do list
+--done-- Delete an item from to-do list
+
 Mark an item as done and undone
 Delete a todo list
