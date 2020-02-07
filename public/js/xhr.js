@@ -20,22 +20,22 @@ const hide = selector =>
 const show = selector =>
   document.querySelector(selector).classList.remove('hidden');
 
-const displayTodo = function(todo) {
+const erase = selector => document.querySelector(selector).remove();
+
+const displayTodo = function(todo, id) {
   return `
-  <div class="display">
+  <div class="display" id="${id}">
     <input type="checkBox" class="check">
     <div class="heading">${todo}</div>
-    <div class="delete"> _ </div>
-    </div>
-    `;
+    <div class="delete" onClick="deleteTask"> _ </div>
+  </div>
+  `;
 };
 
-const askToDelete = function(id) {
+const askToDelete = function(titleId) {
   if (event.target.classList[0] === 'yes') {
-    const callBack = function() {
-      hide('.myTasks');
-    };
-    newRequest('POST', 'deleteTask', callBack, `titleId=${id}`);
+    const callBack = () => erase('.myTasks');
+    newRequest('POST', 'deleteAllTodo', callBack, {titleId});
   }
   hide('.dialogBox');
 };
@@ -46,6 +46,12 @@ const deleteTodo = function() {
   document.querySelector('.dialogBox').onclick = askToDelete.bind(null, id);
 };
 
+const deleteTask = function(titleId) {
+  const taskId = event.target.parentElement.id;
+  const callBack = () => erase(`#${taskId}`);
+  newRequest('POST', 'deleteTask', callBack, {titleId, taskId});
+};
+
 const renderTodos = function() {
   const button = document.getElementById('addButton');
   show('.myTasks');
@@ -54,38 +60,39 @@ const renderTodos = function() {
   const callBack = function() {
     if (this.status === 201) {
       const todo = JSON.parse(this.response).tasks;
-      const totalTasks = todo.map(task => displayTodo(task)).join('\n');
+      const totalTasks = todo
+        .map(task => displayTodo(task.task, task.taskId))
+        .join('\n');
       document.getElementById('todo').innerHTML = totalTasks;
     }
     button.onclick = taskRequest.bind(null, id);
   };
-  newRequest('POST', 'loadTask', callBack, `titleId=${id}`);
+  newRequest('POST', 'loadTask', callBack, {titleId: id});
+};
+
+const displayTitle = function(id, title) {
+  const div = document.createElement('div');
+  div.classList.add('project');
+  div.setAttribute('id', JSON.parse(id));
+  div.innerText = title.value;
+  title.value = '';
+  document.getElementById('allTodos').appendChild(div);
 };
 
 const titleRequest = function() {
-  const [title, allTodos] = getElements(['#titlePlace', '#allTodos']);
-  const div = document.createElement('div');
-  const titleId = `T_${new Date().getTime()}`;
+  const title = document.getElementById('titlePlace');
   const callBack = function() {
     if (this.status === 201) {
-      div.classList.add('project');
-      div.id = titleId;
-      div.innerText = title.value;
-      title.value = '';
-      allTodos.appendChild(div);
+      displayTitle(this.response, title);
     }
   };
-  newRequest(
-    'POST',
-    'saveTitle',
-    callBack,
-    `title=${title.value}&id=${titleId}`
-  );
+  newRequest('POST', 'saveTitle', callBack, {title: title.value});
 };
 
-const taskRequest = function(id) {
+const taskRequest = function(titleId) {
   const [task, todoBlock] = getElements(['#task', '#todo']);
 
+  // eslint-disable-next-line max-statements
   const callBack = function() {
     const [block, todo, checkBox, eliminate] = createElements([
       'div',
@@ -101,6 +108,8 @@ const taskRequest = function(id) {
       [eliminate, 'delete']
     ];
 
+    const taskId = JSON.parse(this.response);
+    block.setAttribute('id', taskId);
     addClass(classElementPairs);
     const parentChildList = [
       [block, checkBox],
@@ -111,30 +120,36 @@ const taskRequest = function(id) {
     appendChildToParent(parentChildList);
     todo.innerText = task.value;
     task.value = '';
-    const taskList = document.querySelectorAll('.delete');
-    taskList[taskList.length - 1].innerHTML = '_';
+    document.querySelectorAll('.delete').forEach(task => {
+      task.innerHTML = '_';
+      task.onclick = deleteTask.bind(null, titleId);
+    });
   };
 
-  newRequest('POST', 'saveTask', callBack, `task=${task.value}&titleId=${id}`);
+  newRequest('POST', 'saveTask', callBack, {
+    task: task.value,
+    titleId
+  });
 };
 
 const newRequest = function(method, url, callBack, reqMsg) {
   const req = new XMLHttpRequest();
   req.open(method, url);
+  req.setRequestHeader('content-type', 'application/json');
   req.onload = callBack;
-  req.send(reqMsg);
+  req.send(JSON.stringify(reqMsg));
 };
 
 const renderIndex = function() {
   const index = document.getElementById('index');
   index.classList.toggle('index');
-  if (index.className !== 'index') {
-    index.style.display = 'none';
-    document.getElementById('textArea').style.width = '1370px';
+  if (index.className === 'hidden') {
+    document.getElementById('textArea').style.width = '1170px';
+    show('#index');
     return;
   }
-  document.getElementById('textArea').style.width = '1170px';
-  index.style.display = 'block';
+  hide('#index');
+  document.getElementById('textArea').style.width = '1370px';
 };
 
 const attachClickEventListeners = () => {
