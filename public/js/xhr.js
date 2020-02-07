@@ -6,14 +6,6 @@ const addClass = classList => {
   classList.forEach(([element, className]) => element.classList.add(className));
 };
 
-const createElements = elementList => {
-  return elementList.map(element => document.createElement(element));
-};
-
-const getElements = selectorList => {
-  return selectorList.map(selector => document.querySelector(selector));
-};
-
 const hide = selector =>
   document.querySelector(selector).classList.add('hidden');
 
@@ -22,12 +14,12 @@ const show = selector =>
 
 const erase = selector => document.querySelector(selector).remove();
 
-const displayTodo = function(todo, id) {
+const displayTodo = function(todo, taskId, titleId) {
   return `
-  <div class="display" id="${id}">
-    <input type="checkBox" class="check" onClick="updateStatus">
+  <div class="display" id="${taskId}">
+    <input type="checkBox" class="check" onClick="updateStatus()">
     <div class="heading">${todo}</div>
-    <div class="delete" onClick="deleteTask"> _ </div>
+    <div class="delete" onClick="deleteTask(${titleId})"> _ </div>
   </div>
   `;
 };
@@ -49,7 +41,11 @@ const deleteTodo = function() {
   document.querySelector('.dialogBox').onclick = askToDelete.bind(null, id);
 };
 
-const deleteTask = function(titleId) {
+const deleteTask = function() {
+  const titleId = document
+    .querySelector('.myTasks')
+    .id.split('.')
+    .pop();
   const taskId = event.target.parentElement.id;
   const callBack = () => erase(`#${taskId}`);
   newRequest('POST', 'deleteTask', callBack, {titleId, taskId});
@@ -58,19 +54,19 @@ const deleteTask = function(titleId) {
 const renderTodos = function() {
   const button = document.getElementById('addButton');
   show('.myTasks');
-  const id = event.target.id;
-  document.querySelector('.myTasks').id = `c.${id}`;
+  const titleId = event.target.id;
+  document.querySelector('.myTasks').setAttribute('id', `c.${titleId}`);
   const callBack = function() {
     if (this.status === 201) {
       const todo = JSON.parse(this.response).tasks;
       const totalTasks = todo
-        .map(task => displayTodo(task.task, task.taskId))
+        .map(task => displayTodo(task.task, task.taskId, titleId))
         .join('\n');
       document.getElementById('todo').innerHTML = totalTasks;
     }
-    button.onclick = taskRequest.bind(null, id);
+    button.onclick = taskRequest.bind(null, titleId);
   };
-  newRequest('POST', 'loadTask', callBack, {titleId: id});
+  newRequest('POST', 'loadTask', callBack, {titleId: titleId});
 };
 
 const displayTitle = function(id, title) {
@@ -97,28 +93,33 @@ const updateStatus = function(titleId) {
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
 
-const taskRequest = function(titleId) {
-  const [task, todoBlock] = getElements(['#task', '#todo']);
+const getCheckBox = function() {
+  const checkBox = document.createElement('input');
+  checkBox.setAttribute('type', 'checkBox');
+  checkBox.setAttribute('class', 'check');
+  return checkBox;
+};
 
+const taskRequest = function(titleId) {
+  const [task, todoBlock] = ['task', 'todo'].map(id =>
+    document.getElementById(id)
+  );
   // eslint-disable-next-line max-statements
   const callBack = function() {
-    const [block, todo, checkBox, eliminate] = createElements([
-      'div',
-      'div',
-      'input',
-      'div'
-    ]);
-    checkBox.setAttribute('type', 'checkBox');
+    const [block, todo, eliminate] = ['div', 'div', 'div'].map(div =>
+      document.createElement(div)
+    );
+    const checkBox = getCheckBox();
+
     const classElementPairs = [
       [block, 'display'],
       [todo, 'heading'],
-      [checkBox, 'check'],
       [eliminate, 'delete']
     ];
+    addClass(classElementPairs);
 
     const taskId = JSON.parse(this.response);
     block.setAttribute('id', taskId);
-    addClass(classElementPairs);
     const parentChildList = [
       [block, checkBox],
       [block, todo],
