@@ -6,6 +6,8 @@ const show = selector =>
 
 const erase = selector => document.querySelector(selector).remove();
 
+const createDiv = () => document.createElement('div');
+
 const displayTodo = function(todo, taskId, done) {
   let checked = '';
   if (done) {
@@ -15,7 +17,7 @@ const displayTodo = function(todo, taskId, done) {
   <div class="display" id="${taskId}">
     <input type="checkBox" class="check" onClick="updateStatus()" ${checked}>
     <div class="heading">${todo}</div>
-    <div class="delete" onClick="deleteTask()"> _ </div>
+    <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()"/>
   </div>
   `;
 };
@@ -23,7 +25,8 @@ const displayTodo = function(todo, taskId, done) {
 const askToDelete = function(titleId) {
   if (event.target.classList[0] === 'yes') {
     const callBack = () => {
-      erase('.myTasks');
+      document.querySelector('#todo').innerText = '';
+      hide('.myTasks');
       erase(`#${titleId}`);
     };
     newRequest('POST', 'deleteAllTodo', callBack, {titleId});
@@ -38,10 +41,8 @@ const deleteTodo = function() {
 };
 
 const deleteTask = function() {
-  const titleId = document
-    .querySelector('.myTasks')
-    .id.split('.')
-    .pop();
+  const myTasks = document.querySelector('.myTasks');
+  const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
   const callBack = () => erase(`#${taskId}`);
   newRequest('POST', 'deleteTask', callBack, {titleId, taskId});
@@ -85,10 +86,8 @@ const titleRequest = function() {
 };
 
 const updateStatus = function() {
-  const titleId = document
-    .querySelector('.myTasks')
-    .id.split('.')
-    .pop();
+  const myTasks = document.querySelector('.myTasks');
+  const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
@@ -100,24 +99,31 @@ const getCheckBox = function() {
   return checkBox;
 };
 
-const createDiv = () => document.createElement('div');
+const getMinusSign = function() {
+  const minusSign = document.createElement('img');
+  minusSign.setAttribute('onClick', 'deleteTask');
+  minusSign.setAttribute('src', '../images/minus.png');
+  minusSign.setAttribute('class', 'titleImg');
+  minusSign.setAttribute('class', 'delete');
+  return minusSign;
+};
+
 const createBlockElements = function() {
   const block = createDiv();
   const todo = createDiv();
-  const eliminate = createDiv();
   const checkBox = getCheckBox();
-  return [block, todo, eliminate, checkBox];
+  const minusSign = getMinusSign();
+  return {block, todo, minusSign, checkBox};
 };
 
 const createBlock = function(task, taskId) {
-  const [block, todo, eliminate, checkBox] = createBlockElements();
+  const {block, todo, minusSign, checkBox} = createBlockElements();
   block.classList.add('display');
   block.setAttribute('id', taskId);
   todo.classList.add('heading');
-  eliminate.classList.add('delete');
   block.appendChild(checkBox);
   block.appendChild(todo);
-  block.appendChild(eliminate);
+  block.appendChild(minusSign);
   todo.innerText = task.value;
   return block;
 };
@@ -135,8 +141,7 @@ const taskRequest = function(titleId) {
       task.onclick = updateStatus;
     });
     document.querySelectorAll('.delete').forEach(task => {
-      task.innerHTML = '_';
-      task.onclick = deleteTask.bind(null, titleId);
+      task.onclick = deleteTask;
     });
   };
 

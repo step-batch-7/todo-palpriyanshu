@@ -11,7 +11,8 @@
     <div id="textArea">
       <h2>MY TASKS</h2>
       <div class="hidden myTasks">
-        <div id="taskInput">
+        <div id="taskInput" class="display">
+          <img src="../images/home.png" class="titleImg" />
           <input
             placeholder="add Task"
             type="text"
@@ -19,8 +20,10 @@
             id="task"
             required
           />
-          <img src="../images/plusSign.png" width="3%" id="addButton" />
+          <img src="../images/plus.png" class="titleImg" id="addButton" />
         </div>
+        <br />
+        <br />
         <div id="todo"></div>
       </div>
     </div>
@@ -30,7 +33,13 @@
         <p>todo</p>
       </div>
       <div class="project">
-        <input placeholder="add Title" type="text" id="titlePlace" required />
+        <input
+          placeholder="add Title"
+          type="text"
+          id="titlePlace"
+          class="heading"
+          required
+        />
         <input type="button" value="save" id="saveTitle" />
       </div>
       <div class="dialogBox hidden">

@@ -10,12 +10,12 @@
     {
       id:1
       title :shopping;
-      items : [{item: buy dress, done: true}, {item:buy shoes, done: false}]
+      items : [{id:1, item: buy dress, done: true}, {id:2, item:buy shoes, done: false}]
     },
     {
       id:2
       title :attend wedding;
-      items : [{item:book tickets, done: true}, {item:buy shagun gift, done:false }]
+      items : [{id:1, item:book tickets, done: true}, {id:2, item:buy shagun gift, done:false }]
     },
   ]
 
@@ -44,5 +44,5 @@
 --done-- Add an item to a to-do list
 --done-- Delete an item from to-do list
 
-Mark an item as done and undone
-Delete a todo list
+--done-- Mark an item as done and undone
+--done-- Delete a todo list
