@@ -6,10 +6,8 @@ const show = selector =>
 
 const erase = selector => document.querySelector(selector).remove();
 
-const createDiv = () => document.createElement('div');
-
 const htmlToElements = function(html) {
-  const template = createDiv();
+  const template = document.createElement('div');
   template.innerHTML = html;
   return template.firstChild;
 };
