@@ -14,18 +14,19 @@ const htmlToElements = function(html) {
   return template.firstChild;
 };
 
+const createBlock = function(task, taskId, hasChecked = '') {
+  return `<div class="display" id="${taskId}">
+  <input type="checkBox" class="check" onClick="updateStatus()" ${hasChecked}>
+  <div class="heading">${task}</div>
+  <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()">
+  </div>`;
+};
+
 const displayTodo = function(todo, taskId, done) {
-  let checked = '';
   if (done) {
-    checked = 'checked';
+    return createBlock(todo, taskId, 'checked');
   }
-  return `
-  <div class="display" id="${taskId}">
-    <input type="checkBox" class="check" onClick="updateStatus()" ${checked}>
-    <div class="heading">${todo}</div>
-    <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()"/>
-  </div>
-  `;
+  return createBlock(todo, taskId);
 };
 
 const askToDelete = function(titleId) {
@@ -97,22 +98,14 @@ const updateStatus = function() {
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
 
-const createBlock = function(task, taskId) {
-  const html = `<div class="display" id="${taskId}">
-  <input type="checkBox" class="check" onClick="updateStatus()">
-  <div class="heading">${task.value}</div>
-  <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()">
-  </div>`;
-  return htmlToElements(html);
-};
-
 const taskRequest = function(titleId) {
   const [task, todoBlock] = ['task', 'todo'].map(id =>
     document.getElementById(id)
   );
   const callBack = function() {
     const taskId = JSON.parse(this.response);
-    const block = createBlock(task, taskId);
+    let block = createBlock(task.value, taskId);
+    block = htmlToElements(block);
     todoBlock.appendChild(block);
     task.value = '';
     document.querySelectorAll('.check').forEach(task => {
