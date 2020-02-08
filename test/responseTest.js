@@ -64,4 +64,11 @@ describe('GET', function() {
   });
 });
 
-
+describe('PUT', function() {
+  it('should respond with 404 when method is not allowed', function(done) {
+    request(app.serveRequest.bind(app))
+      .put('/index.html')
+      .set('Accept', '*/*')
+      .expect(STATUS_CODES.notFound, done);
+  });
+});
