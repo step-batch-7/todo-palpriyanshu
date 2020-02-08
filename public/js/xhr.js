@@ -104,11 +104,9 @@ const getCheckBox = function() {
 };
 
 const getMinusSign = function() {
-  const minusSign = document.createElement('img');
-  minusSign.setAttribute('onClick', 'deleteTask');
-  minusSign.setAttribute('src', '../images/minus.png');
-  minusSign.setAttribute('class', 'titleImg');
-  minusSign.setAttribute('class', 'delete');
+  const html = '<img src="../images/minus.png" class="titleImg delete">';
+  const minusSign = htmlToElements(html);
+  minusSign.onclick = deleteTask;
   return minusSign;
 };
 
