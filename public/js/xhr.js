@@ -97,36 +97,13 @@ const updateStatus = function() {
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
 
-const getCheckBox = function() {
-  const html = '<input type="checkBox" class="check" onClick="updateStatus()">';
-  return htmlToElements(html);
-};
-
-const getMinusSign = function() {
-  const html = '<img src="../images/minus.png" class="titleImg delete">';
-  const minusSign = htmlToElements(html);
-  minusSign.onclick = deleteTask;
-  return minusSign;
-};
-
-const createBlockElements = function() {
-  const block = createDiv();
-  const todo = createDiv();
-  const checkBox = getCheckBox();
-  const minusSign = getMinusSign();
-  return {block, todo, minusSign, checkBox};
-};
-
 const createBlock = function(task, taskId) {
-  const {block, todo, minusSign, checkBox} = createBlockElements();
-  block.classList.add('display');
-  block.setAttribute('id', taskId);
-  todo.classList.add('heading');
-  block.appendChild(checkBox);
-  block.appendChild(todo);
-  block.appendChild(minusSign);
-  todo.innerText = task.value;
-  return block;
+  const html = `<div class="display" id="${taskId}">
+  <input type="checkBox" class="check" onClick="updateStatus()">
+  <div class="heading">${task.value}</div>
+  <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()">
+  </div>`;
+  return htmlToElements(html);
 };
 
 const taskRequest = function(titleId) {
