@@ -73,9 +73,8 @@ const renderTodos = function() {
 };
 
 const displayTitle = function(id, title) {
-  const div = document.createElement('div');
-  div.classList.add('project');
-  div.setAttribute('id', JSON.parse(id));
+  const html = `<div class="project" id="${JSON.parse(id)}"></div>`;
+  const div = htmlToElements(html);
   div.innerText = title.value;
   title.value = '';
   document.getElementById('allTodos').appendChild(div);
