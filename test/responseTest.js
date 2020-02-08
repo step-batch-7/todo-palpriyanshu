@@ -1,4 +1,6 @@
 const request = require('supertest');
+const {truncateSync} = require('fs');
+const config = require('../config.js');
 
 const app = require('../lib/handler.js');
 const STATUS_CODES = require('../lib/statusCodes.js');
@@ -70,5 +72,22 @@ describe('PUT', function() {
       .put('/index.html')
       .set('Accept', '*/*')
       .expect(STATUS_CODES.notFound, done);
+  });
+});
+
+describe('POST', function() {
+  afterEach(() => {
+    truncateSync(config.DATA_STORE);
+  });
+  context('request for saveTitle', function() {
+    it('should parse JSON & respond with "created"', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/template/saveTitle')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({title: 'maths'}))
+        .expect('content-length', '17')
+        .expect(STATUS_CODES.create, done);
+    });
   });
 });
