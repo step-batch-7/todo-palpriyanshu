@@ -8,6 +8,12 @@ const erase = selector => document.querySelector(selector).remove();
 
 const createDiv = () => document.createElement('div');
 
+const htmlToElements = function(html) {
+  const template = createDiv();
+  template.innerHTML = html;
+  return template.firstChild;
+};
+
 const displayTodo = function(todo, taskId, done) {
   let checked = '';
   if (done) {
@@ -93,10 +99,8 @@ const updateStatus = function() {
 };
 
 const getCheckBox = function() {
-  const checkBox = document.createElement('input');
-  checkBox.setAttribute('type', 'checkBox');
-  checkBox.setAttribute('class', 'check');
-  return checkBox;
+  const html = '<input type="checkBox" class="check" onClick="updateStatus()">';
+  return htmlToElements(html);
 };
 
 const getMinusSign = function() {
