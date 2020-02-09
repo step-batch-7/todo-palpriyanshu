@@ -88,6 +88,29 @@ describe('PUT', function() {
 });
 
 describe('POST', function() {
+  context('request for loadTask', function() {
+    it('should parse JSON & respond with 201', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/loadTask')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({titleId: 'T_1581166471934'}))
+        .expect('content-length', '159')
+        .expect(STATUS_CODES.create, done);
+    });
+  });
+
+  context('request for updateTaskStatus', function() {
+    it('should parse JSON & respond with 200', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/updateTaskStatus')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({titleId: 'T_1581166399023', taskId: 'T_639'}))
+        .expect('content-length', '0')
+        .expect(STATUS_CODES.ok, done);
+    });
+  });
   context('request for saveTitle', function() {
     it('should parse JSON & respond with 201 create', function(done) {
       request(app.serveRequest.bind(app))
@@ -108,18 +131,6 @@ describe('POST', function() {
         .set('content-type', 'application/json')
         .send(JSON.stringify({task: 'shapes', titleId: 'T_1581166399023'}))
         .expect('content-length', '7')
-        .expect(STATUS_CODES.create, done);
-    });
-  });
-
-  context('request for loadTask', function() {
-    it('should parse JSON & respond with 201', function(done) {
-      request(app.serveRequest.bind(app))
-        .post('/loadTask')
-        .set('Accept', '*/*')
-        .set('content-type', 'application/json')
-        .send(JSON.stringify({titleId: 'T_1581166471934'}))
-        .expect('content-length', '159')
         .expect(STATUS_CODES.create, done);
     });
   });
