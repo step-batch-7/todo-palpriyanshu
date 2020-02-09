@@ -111,4 +111,40 @@ describe('POST', function() {
         .expect(STATUS_CODES.create, done);
     });
   });
+
+  context('request for loadTask', function() {
+    it('should parse JSON & respond with 201', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/loadTask')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({titleId: 'T_1581166471934'}))
+        .expect('content-length', '159')
+        .expect(STATUS_CODES.create, done);
+    });
+  });
+
+  context('request for deleteTask', function() {
+    it('should parse JSON & respond with 200', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/deleteTask')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({titleId: 'T_1581166399023', taskId: 'T_639'}))
+        .expect('content-length', '0')
+        .expect(STATUS_CODES.ok, done);
+    });
+  });
+
+  context('request for deleteAllTodo', function() {
+    it('should parse JSON & respond with 200', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/deleteAllTodo')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({titleId: 'T_1581166399023'}))
+        .expect('content-length', '0')
+        .expect(STATUS_CODES.ok, done);
+    });
+  });
 });
