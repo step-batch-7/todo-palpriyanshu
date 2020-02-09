@@ -147,4 +147,26 @@ describe('POST', function() {
         .expect(STATUS_CODES.ok, done);
     });
   });
+
+  context('request for todoPage', function() {
+    it('should parse queryString & respond with 303', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/template/todoPage.html')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .send('userName: priyanshu')
+        .expect('content-length', '0')
+        .expect(STATUS_CODES.redirect, done)
+        .expect('location', '/template/todoPage.html');
+    });
+
+    it('should respond with html after redirect', function(done) {
+      request(app.serveRequest.bind(app))
+        .get('/template/todoPage.html')
+        .set('Accept', '*/*')
+        .expect('Content-Type', /html/)
+        .expect('content-length', '1808')
+        .expect(STATUS_CODES.ok, done);
+    });
+  });
 });
