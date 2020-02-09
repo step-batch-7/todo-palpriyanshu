@@ -1,13 +1,25 @@
 const request = require('supertest');
-const {truncateSync} = require('fs');
+const {truncateSync, readFileSync, writeFileSync} = require('fs');
 const config = require('../config.js');
 
-const app = require('../lib/handler.js');
 const STATUS_CODES = require('../lib/statusCodes.js');
+
+const createSampleTODO = function() {
+  const sampleContent = readFileSync(config.SAMPLE_TODO, 'utf8');
+  writeFileSync(config.DATA_STORE, sampleContent, 'utf8');
+};
+
+createSampleTODO();
+
+const app = require('../lib/handler.js');
+
+after(() => {
+  truncateSync(config.DATA_STORE);
+});
 
 describe('GET', function() {
   context('request for file that does not exist', function() {
-    it('should respond with landingPage when url is "/"', function(done) {
+    it('should respond with 404 notFound"', function(done) {
       request(app.serveRequest.bind(app))
         .get('/badFile')
         .set('Accept', '*/*')
@@ -76,17 +88,26 @@ describe('PUT', function() {
 });
 
 describe('POST', function() {
-  afterEach(() => {
-    truncateSync(config.DATA_STORE);
-  });
   context('request for saveTitle', function() {
-    it('should parse JSON & respond with "created"', function(done) {
+    it('should parse JSON & respond with 201 create', function(done) {
       request(app.serveRequest.bind(app))
-        .post('/template/saveTitle')
+        .post('/saveTitle')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({title: 'maths'}))
         .expect('content-length', '17')
+        .expect(STATUS_CODES.create, done);
+    });
+  });
+
+  context('request for saveTask', function() {
+    it('should parse JSON & respond with 201 create', function(done) {
+      request(app.serveRequest.bind(app))
+        .post('/saveTask')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({task: 'shapes', titleId: 'T_1581166399023'}))
+        .expect('content-length', '7')
         .expect(STATUS_CODES.create, done);
     });
   });
