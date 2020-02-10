@@ -94,7 +94,7 @@ describe('POST', function() {
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({titleId: 'T_1581166471934'}))
-        .expect('content-length', '159')
+        .expect('content-length', '146')
         .expect(STATUS_CODES.create, done);
     });
   });
@@ -110,6 +110,7 @@ describe('POST', function() {
         .expect(STATUS_CODES.ok, done);
     });
   });
+
   context('request for saveTitle', function() {
     it('should parse JSON & respond with 201 create', function(done) {
       request(app.serveRequest.bind(app))
@@ -175,7 +176,7 @@ describe('POST', function() {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1790')
+        .expect('content-length', '1766')
         .expect(STATUS_CODES.ok, done);
     });
   });

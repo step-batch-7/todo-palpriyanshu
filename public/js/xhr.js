@@ -12,19 +12,6 @@ const htmlToElements = function(html) {
   return template.firstElementChild;
 };
 
-// const createTodoCard = function() {
-//   return `
-//   <div class="hidden myTasks">
-//     <div id="taskInput" class="display">
-//       <input placeholder="add Task" type="text" id="task" required />
-//       <img src="../images/plus.png" class="titleImg" id="addButton" />
-//     </div>
-//     <br />
-//     <br />
-//     <div id="todo"></div>
-//   </div>`;
-// };
-
 const createBlock = function(task, taskId, hasChecked = '') {
   return `<div class="display" id="${taskId}">
   <input type="checkBox" class="check" onClick="updateStatus()" ${hasChecked}>
