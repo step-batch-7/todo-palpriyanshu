@@ -20,13 +20,13 @@ const createBlock = function(task, taskId, hasChecked = '') {
   </div>`;
 };
 
-const createTodo = function(tasks) {
+const createTask = function(tasks) {
   return tasks
-    .map(task => displayTodo(task.task, task.taskId, task.done))
+    .map(task => displayTask(task.task, task.taskId, task.done))
     .join('\n');
 };
 
-const displayTodo = function(todo, taskId, done) {
+const displayTask = function(todo, taskId, done) {
   if (done) {
     return createBlock(todo, taskId, 'checked');
   }
@@ -67,7 +67,7 @@ const renderTodos = function() {
   const callBack = function() {
     if (this.status === 201) {
       const todo = JSON.parse(this.response).tasks;
-      const totalTasks = createTodo(todo);
+      const totalTasks = createTask(todo);
       document.getElementById('todo').innerHTML = totalTasks;
     }
     button.onclick = taskRequest.bind(null, titleId);
@@ -83,7 +83,7 @@ const displayTitle = function(id, title) {
   document.getElementById('allTodos').appendChild(div);
 };
 
-const titleRequest = function() {
+const createTodo = function() {
   const title = document.getElementById('titlePlace');
   const callBack = function() {
     if (this.status === 201) {
@@ -157,7 +157,7 @@ const renderIndex = function() {
 
 const attachClickEventListeners = () => {
   document.querySelector('#fold').addEventListener('click', renderIndex);
-  document.querySelector('#saveTitle').addEventListener('click', titleRequest);
+  document.querySelector('#saveTitle').addEventListener('click', createTodo);
   document.querySelector('#allTodos').addEventListener('click', renderTodos);
   document.querySelector('#allTodos').addEventListener('dblclick', deleteTodo);
   document.querySelector('.searchBar').addEventListener('keyup', filterTodo);
