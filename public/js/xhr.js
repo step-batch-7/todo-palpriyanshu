@@ -9,8 +9,21 @@ const erase = selector => document.querySelector(selector).remove();
 const htmlToElements = function(html) {
   const template = document.createElement('div');
   template.innerHTML = html;
-  return template.firstChild;
+  return template.firstElementChild;
 };
+
+// const createTodoCard = function() {
+//   return `
+//   <div class="hidden myTasks">
+//     <div id="taskInput" class="display">
+//       <input placeholder="add Task" type="text" id="task" required />
+//       <img src="../images/plus.png" class="titleImg" id="addButton" />
+//     </div>
+//     <br />
+//     <br />
+//     <div id="todo"></div>
+//   </div>`;
+// };
 
 const createBlock = function(task, taskId, hasChecked = '') {
   return `<div class="display" id="${taskId}">
@@ -18,6 +31,12 @@ const createBlock = function(task, taskId, hasChecked = '') {
   <div class="heading">${task}</div>
   <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()">
   </div>`;
+};
+
+const createTodo = function(tasks) {
+  return tasks
+    .map(task => displayTodo(task.task, task.taskId, task.done))
+    .join('\n');
 };
 
 const displayTodo = function(todo, taskId, done) {
@@ -61,9 +80,7 @@ const renderTodos = function() {
   const callBack = function() {
     if (this.status === 201) {
       const todo = JSON.parse(this.response).tasks;
-      const totalTasks = todo
-        .map(task => displayTodo(task.task, task.taskId, task.done))
-        .join('\n');
+      const totalTasks = createTodo(todo);
       document.getElementById('todo').innerHTML = totalTasks;
     }
     button.onclick = taskRequest.bind(null, titleId);
@@ -120,6 +137,17 @@ const taskRequest = function(titleId) {
   });
 };
 
+const filterTodo = function() {
+  const searchValue = event.target.value;
+  const callback = function() {
+    const matchedValue = JSON.parse(this.response);
+    const form = document.querySelector('#myAllTasks');
+    form.innerHTML = '';
+    console.log(matchedValue);
+  };
+  newRequest('POST', 'filterTodo', callback, {searchValue});
+};
+
 const newRequest = function(method, url, callBack, reqMsg) {
   const req = new XMLHttpRequest();
   req.open(method, url);
@@ -145,6 +173,7 @@ const attachClickEventListeners = () => {
   document.querySelector('#saveTitle').addEventListener('click', titleRequest);
   document.querySelector('#allTodos').addEventListener('click', renderTodos);
   document.querySelector('#allTodos').addEventListener('dblclick', deleteTodo);
+  document.querySelector('.searchBar').addEventListener('keyup', filterTodo);
 };
 
 window.onload = attachClickEventListeners;

@@ -61,7 +61,6 @@ describe('GET', function() {
         .get('/css/style.css')
         .set('Accept', '*/*')
         .expect('content-type', /css/)
-        .expect('content-length', '1900')
         .expect(STATUS_CODES.ok, done);
     });
   });
@@ -130,7 +129,7 @@ describe('POST', function() {
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({task: 'shapes', titleId: 'T_1581166399023'}))
-        .expect('content-length', '7')
+        .expect('content-length', '17')
         .expect(STATUS_CODES.create, done);
     });
   });
@@ -176,7 +175,7 @@ describe('POST', function() {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1808')
+        .expect('content-length', '1790')
         .expect(STATUS_CODES.ok, done);
     });
   });

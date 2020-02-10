@@ -9,22 +9,18 @@
   </head>
   <body class="body">
     <div id="textArea">
-      <h2>MY TASKS</h2>
-      <div class="hidden myTasks">
-        <div id="taskInput" class="display">
-          <img src="../images/home.png" class="titleImg" />
-          <input
-            placeholder="add Task"
-            type="text"
-            class="heading"
-            id="task"
-            required
-          />
-          <img src="../images/plus.png" class="titleImg" id="addButton" />
+      <h1>MY TASKS</h1>
+      <input placeholder="search here" class="searchBar" required />
+      <div id="myAllTasks">
+        <div class="hidden myTasks">
+          <div id="taskInput" class="display">
+            <input placeholder="add Task" type="text" id="task" required />
+            <img src="../images/plus.png" class="titleImg" id="addButton" />
+          </div>
+          <br />
+          <br />
+          <div id="todo"></div>
         </div>
-        <br />
-        <br />
-        <div id="todo"></div>
       </div>
     </div>
 
