@@ -93,7 +93,7 @@ describe('POST', function() {
         .post('/loadTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({titleId: 'T_1581166471934'}))
+        .send(JSON.stringify({todoId: 'T_1581166471934'}))
         .expect('content-length', '146')
         .expect(STATUS_CODES.create, done);
     });
@@ -118,7 +118,7 @@ describe('POST', function() {
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({title: 'maths'}))
-        .expect('content-length', '17')
+        .expect('content-length', '40')
         .expect(STATUS_CODES.create, done);
     });
   });
@@ -129,8 +129,8 @@ describe('POST', function() {
         .post('/saveTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({task: 'shapes', titleId: 'T_1581166399023'}))
-        .expect('content-length', '17')
+        .send(JSON.stringify({name: 'shapes', titleId: 'T_1581166399023'}))
+        .expect('content-length', '53')
         .expect(STATUS_CODES.create, done);
     });
   });
@@ -176,7 +176,7 @@ describe('POST', function() {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1766')
+        .expect('content-length', '1612')
         .expect(STATUS_CODES.ok, done);
     });
   });
