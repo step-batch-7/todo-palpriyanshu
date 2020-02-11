@@ -176,7 +176,7 @@ describe('POST', function() {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1612')
+        .expect('content-length', '1624')
         .expect(STATUS_CODES.ok, done);
     });
   });

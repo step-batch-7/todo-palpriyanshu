@@ -1,34 +1,33 @@
-const hide = selector =>
-  document.querySelector(selector).classList.add('hidden');
+const getElement = selector => document.querySelector(selector);
 
-const show = selector =>
-  document.querySelector(selector).classList.remove('hidden');
+const hide = selector => getElement(selector).classList.add('hidden');
 
-const erase = selector => document.querySelector(selector).remove();
+const show = selector => getElement(selector).classList.remove('hidden');
 
-const askToDelete = function(titleId) {
-  if (event.target.classList[0] === 'yes') {
-    const callBack = () => {
-      document.querySelector('#todo').innerText = '';
-      hide('.myTasks');
-      erase(`#${titleId}`);
-    };
-    newRequest('POST', 'deleteAllTodo', callBack, {titleId});
-  }
+const erase = id => document.getElementById(id).remove();
+
+const deleteTodo = function(todoId) {
+  const callBack = () => {
+    getElement('#todo').innerText = '';
+    hide('.myTasks');
+    erase(`${todoId}`);
+  };
+  newRequest('POST', 'deleteAllTodo', callBack, {todoId});
   hide('.dialogBox');
 };
 
-const deleteTodo = function() {
+const showDeleteDialogBox = function() {
   const id = event.target.id;
   show('.dialogBox');
-  document.querySelector('.dialogBox').onclick = askToDelete.bind(null, id);
+  getElement('.delete').setAttribute('onclick', `deleteTodo('${id}')`);
+  getElement('.cancel').setAttribute('onclick', 'hide(".dialogBox")');
 };
 
 const deleteTask = function() {
-  const myTasks = document.querySelector('.myTasks');
+  const myTasks = getElement('.myTasks');
   const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
-  const callBack = () => erase(`#${taskId}`);
+  const callBack = () => erase(`${taskId}`);
   newRequest('POST', 'deleteTask', callBack, {titleId, taskId});
 };
 
@@ -38,12 +37,8 @@ const createBlock = function(task) {
   return `<div class="display" id="${id}">
   <input type="checkBox" class="check" onclick="updateStatus()" ${isChecked}>
   <div class="heading">${name}</div>
-  <img src="../images/minus.png" class="titleImg delete" onclick="deleteTask()">
+  <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
   </div>`;
-};
-
-const createTask = function(tasks) { 
-  return tasks.map(task => createBlock(task)).join('\n');
 };
 
 const todoBlockAsHtml = function(todoId) {
@@ -60,26 +55,27 @@ const todoBlockAsHtml = function(todoId) {
 };
 
 const displayTodo = function(todoId) {
-  const myAllTasks = document.getElementById('myAllTasks');
+  const myAllTasks = getElement('#myAllTasks');
   myAllTasks.innerHTML = todoBlockAsHtml(todoId);
   const callBack = function() {
     if (this.status === 201) {
-      const todo = JSON.parse(this.response).tasks;
-      document.getElementById('todo').innerHTML = createTask(todo);
+      const tasks = JSON.parse(this.response).tasks;
+      const todo = getElement('#todo');
+      todo.innerHTML = tasks.map(task => createBlock(task)).join('\n');
     }
   };
   newRequest('POST', 'loadTask', callBack, {todoId});
 };
 
 const addToTodoList = function({id, title}) {
-  const todoLists = document.getElementById('allTodos');
+  const todoLists = getElement('#allTodos');
   const html = `<div class="project" id="${id}" onclick="displayTodo('${id}')">
      ${title} </div>`;
   todoLists.innerHTML += html;
 };
 
 const createTodo = function() {
-  const textBox = document.getElementById('titlePlace');
+  const textBox = getElement('#titlePlace');
   const title = textBox.value;
   textBox.value = '';
   const callBack = function() {
@@ -91,9 +87,8 @@ const createTodo = function() {
 };
 
 const addNewTask = function(titleId) {
-  console.log(titleId);
-  const todoBlock = document.getElementById('todo');
-  const textBox = document.getElementById('task');
+  const todoBlock = getElement('#todo');
+  const textBox = getElement('#task');
   const name = textBox.value;
   textBox.value = '';
   const callBack = function() {
@@ -105,7 +100,7 @@ const addNewTask = function(titleId) {
 };
 
 const updateStatus = function() {
-  const myTasks = document.querySelector('.myTasks');
+  const myTasks = getElement('.myTasks');
   const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
@@ -115,7 +110,7 @@ const filterTodo = function() {
   const searchValue = event.target.value;
   const callback = function() {
     const matchedValue = JSON.parse(this.response);
-    const form = document.querySelector('#myAllTasks');
+    const form = getElement('#myAllTasks');
     form.innerHTML = '';
   };
   newRequest('POST', 'filterTodo', callback, {searchValue});
@@ -130,22 +125,25 @@ const newRequest = function(method, url, callBack, reqMsg) {
 };
 
 const renderIndex = function() {
-  const index = document.getElementById('index');
+  const index = getElement('#index');
   index.classList.toggle('index');
   if (index.className === 'hidden') {
-    document.getElementById('textArea').style.width = '1170px';
+    getElement('#textArea').style.width = '1170px';
     show('#index');
     return;
   }
   hide('#index');
-  document.getElementById('textArea').style.width = '1370px';
+  getElement('#textArea').style.width = '1370px';
 };
 
+// const displayTodoPage = () => {
+
+// }
 const attachClickEventListeners = () => {
-  document.querySelector('#fold').addEventListener('click', renderIndex);
-  document.querySelector('#saveTitle').addEventListener('click', createTodo);
-  document.querySelector('#allTodos').addEventListener('dblclick', deleteTodo);
-  document.querySelector('.searchBar').addEventListener('keyup', filterTodo);
+  getElement('#fold').addEventListener('click', renderIndex);
+  getElement('#saveTitle').addEventListener('click', createTodo);
+  getElement('#allTodos').addEventListener('dblclick', showDeleteDialogBox);
+  getElement('.searchBar').addEventListener('keyup', filterTodo);
 };
 
 window.onload = attachClickEventListeners;
