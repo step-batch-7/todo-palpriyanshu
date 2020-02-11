@@ -46,3 +46,15 @@
 
 --done-- Mark an item as done and undone
 --done-- Delete a todo list
+
+
+show title to textArea
+
+
+Edit title: Ability to edit their existing todo list title.
+Edit tasks: Ability to edit their existing tasks.
+Search by title:  Search the list by its title words.
+Search by tasks: Search the todo item by its matched words.
+User Todo's: A user can log in and log out off their account and work on their own todos.
+Home Page: If not logged in it is a login page else it is the user's todo page/dashboard.
+
