@@ -6,33 +6,6 @@ const show = selector =>
 
 const erase = selector => document.querySelector(selector).remove();
 
-const htmlToElements = function(html) {
-  const template = document.createElement('div');
-  template.innerHTML = html;
-  return template.firstElementChild;
-};
-
-const createBlock = function(task, taskId, hasChecked = '') {
-  return `<div class="display" id="${taskId}">
-  <input type="checkBox" class="check" onClick="updateStatus()" ${hasChecked}>
-  <div class="heading">${task}</div>
-  <img src="../images/minus.png" class="titleImg delete" onClick="deleteTask()">
-  </div>`;
-};
-
-const createTask = function(tasks) {
-  return tasks
-    .map(task => displayTask(task.task, task.taskId, task.done))
-    .join('\n');
-};
-
-const displayTask = function(todo, taskId, done) {
-  if (done) {
-    return createBlock(todo, taskId, 'checked');
-  }
-  return createBlock(todo, taskId);
-};
-
 const askToDelete = function(titleId) {
   if (event.target.classList[0] === 'yes') {
     const callBack = () => {
@@ -59,38 +32,76 @@ const deleteTask = function() {
   newRequest('POST', 'deleteTask', callBack, {titleId, taskId});
 };
 
-const renderTodos = function() {
-  const button = document.getElementById('addButton');
-  show('.myTasks');
-  const titleId = event.target.id;
-  document.querySelector('.myTasks').setAttribute('id', `c.${titleId}`);
+const createBlock = function(task) {
+  const {id, name, done} = task;
+  const isChecked = done ? 'checked' : '';
+  return `<div class="display" id="${id}">
+  <input type="checkBox" class="check" onclick="updateStatus()" ${isChecked}>
+  <div class="heading">${name}</div>
+  <img src="../images/minus.png" class="titleImg delete" onclick="deleteTask()">
+  </div>`;
+};
+
+const createTask = function(tasks) { 
+  return tasks.map(task => createBlock(task)).join('\n');
+};
+
+const todoBlockAsHtml = function(todoId) {
+  return `
+  <div class="myTasks" id="c.${todoId}">
+    <div id="taskInput" class="display">
+      <input placeholder="add Task" type="text" id="task" required />
+      <img src="../images/plus.png" class="titleImg" id="addButton" onclick = "addNewTask('${todoId}')"/>
+    </div>
+    <br />
+    <br />
+    <div id="todo"></div>
+  </div>`;
+};
+
+const displayTodo = function(todoId) {
+  const myAllTasks = document.getElementById('myAllTasks');
+  myAllTasks.innerHTML = todoBlockAsHtml(todoId);
   const callBack = function() {
     if (this.status === 201) {
       const todo = JSON.parse(this.response).tasks;
-      const totalTasks = createTask(todo);
-      document.getElementById('todo').innerHTML = totalTasks;
+      document.getElementById('todo').innerHTML = createTask(todo);
     }
-    button.onclick = taskRequest.bind(null, titleId);
   };
-  newRequest('POST', 'loadTask', callBack, {titleId: titleId});
+  newRequest('POST', 'loadTask', callBack, {todoId});
 };
 
-const displayTitle = function(id, title) {
-  const html = `<div class="project" id="${JSON.parse(id)}"></div>`;
-  const div = htmlToElements(html);
-  div.innerText = title.value;
-  title.value = '';
-  document.getElementById('allTodos').appendChild(div);
+const addToTodoList = function({id, title}) {
+  const todoLists = document.getElementById('allTodos');
+  const html = `<div class="project" id="${id}" onclick="displayTodo('${id}')">
+     ${title} </div>`;
+  todoLists.innerHTML += html;
 };
 
 const createTodo = function() {
-  const title = document.getElementById('titlePlace');
+  const textBox = document.getElementById('titlePlace');
+  const title = textBox.value;
+  textBox.value = '';
   const callBack = function() {
     if (this.status === 201) {
-      displayTitle(this.response, title);
+      addToTodoList(JSON.parse(this.response));
     }
   };
-  newRequest('POST', 'saveTitle', callBack, {title: title.value});
+  newRequest('POST', 'saveTitle', callBack, {title});
+};
+
+const addNewTask = function(titleId) {
+  console.log(titleId);
+  const todoBlock = document.getElementById('todo');
+  const textBox = document.getElementById('task');
+  const name = textBox.value;
+  textBox.value = '';
+  const callBack = function() {
+    const task = JSON.parse(this.response);
+    todoBlock.innerHTML += createBlock(task);
+  };
+
+  newRequest('POST', 'saveTask', callBack, {name, titleId});
 };
 
 const updateStatus = function() {
@@ -100,37 +111,12 @@ const updateStatus = function() {
   newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
 
-const taskRequest = function(titleId) {
-  const [task, todoBlock] = ['task', 'todo'].map(id =>
-    document.getElementById(id)
-  );
-  const callBack = function() {
-    const taskId = JSON.parse(this.response);
-    let block = createBlock(task.value, taskId);
-    block = htmlToElements(block);
-    todoBlock.appendChild(block);
-    task.value = '';
-    document.querySelectorAll('.check').forEach(task => {
-      task.onclick = updateStatus;
-    });
-    document.querySelectorAll('.delete').forEach(task => {
-      task.onclick = deleteTask;
-    });
-  };
-
-  newRequest('POST', 'saveTask', callBack, {
-    task: task.value,
-    titleId
-  });
-};
-
 const filterTodo = function() {
   const searchValue = event.target.value;
   const callback = function() {
     const matchedValue = JSON.parse(this.response);
     const form = document.querySelector('#myAllTasks');
     form.innerHTML = '';
-    console.log(matchedValue);
   };
   newRequest('POST', 'filterTodo', callback, {searchValue});
 };
@@ -158,7 +144,6 @@ const renderIndex = function() {
 const attachClickEventListeners = () => {
   document.querySelector('#fold').addEventListener('click', renderIndex);
   document.querySelector('#saveTitle').addEventListener('click', createTodo);
-  document.querySelector('#allTodos').addEventListener('click', renderTodos);
   document.querySelector('#allTodos').addEventListener('dblclick', deleteTodo);
   document.querySelector('.searchBar').addEventListener('keyup', filterTodo);
 };
