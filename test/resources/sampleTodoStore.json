@@ -1,69 +1,69 @@
 [
   {
-    "titleId": "T_1581166399023",
+    "id": "T_1581166399023",
     "title": "Food Items",
     "tasks": [
       {
-        "taskId": "T_639",
-        "task": "Rasogulla",
+        "id": "T_639",
+        "name": "Rasogulla",
         "done": false
       },
       {
-        "taskId": "T_737",
-        "task": "Jalebi",
+        "id": "T_737",
+        "name": "Jalebi",
         "done": false
       },
       {
-        "taskId": "T_554",
-        "task": "Icecream",
+        "id": "T_554",
+        "name": "Icecream",
         "done": false
       }
     ]
   },
   {
-    "titleId": "T_1581166471934",
+    "id": "T_1581166471934",
     "title": "Shopping",
     "tasks": [
       {
-        "taskId": "T_613",
-        "task": "buy dress",
+        "id": "T_613",
+        "name": "buy dress",
         "done": true
       },
       {
-        "taskId": "T_161",
-        "task": "buy gifts",
+        "id": "T_161",
+        "name": "buy gifts",
         "done": false
       }
     ]
   },
   {
-    "titleId": "T_1581167075469",
+    "id": "T_1581167075469",
     "title": "games",
     "tasks": [
       {
-        "taskId": "T_946",
-        "task": "cricket",
+        "id": "T_946",
+        "name": "cricket",
         "done": false
       },
       {
-        "taskId": "T_63",
-        "task": "table Tennis",
+        "id": "T_63",
+        "name": "table Tennis",
         "done": false
       }
     ]
   },
   {
-    "titleId": "T_1581167268084",
+    "id": "T_1581167268084",
     "title": "homeWork",
     "tasks": [
       {
-        "taskId": "T_917",
-        "task": "Maths",
+        "id": "T_917",
+        "name": "Maths",
         "done": false
       },
       {
-        "taskId": "T_167",
-        "task": "English",
+        "id": "T_167",
+        "name": "English",
         "done": false
       }
     ]
