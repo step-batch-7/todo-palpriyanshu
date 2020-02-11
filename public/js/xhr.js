@@ -6,38 +6,13 @@ const show = selector => getElement(selector).classList.remove('hidden');
 
 const erase = id => document.getElementById(id).remove();
 
-const deleteTodo = function(todoId) {
-  const callBack = () => {
-    getElement('#todo').innerText = '';
-    hide('.myTasks');
-    erase(`${todoId}`);
-  };
-  newRequest('POST', 'deleteAllTodo', callBack, {todoId});
-  hide('.dialogBox');
-};
-
-const showDeleteDialogBox = function() {
-  const id = event.target.id;
-  show('.dialogBox');
-  getElement('.delete').setAttribute('onclick', `deleteTodo('${id}')`);
-  getElement('.cancel').setAttribute('onclick', 'hide(".dialogBox")');
-};
-
-const deleteTask = function() {
-  const myTasks = getElement('.myTasks');
-  const titleId = myTasks.id.split('.').pop();
-  const taskId = event.target.parentElement.id;
-  const callBack = () => erase(`${taskId}`);
-  newRequest('POST', 'deleteTask', callBack, {titleId, taskId});
-};
-
-const createBlock = function(task) {
+const taskAsHtml = function(task) {
   const {id, name, done} = task;
   const isChecked = done ? 'checked' : '';
   return `<div class="display" id="${id}">
-  <input type="checkBox" class="check" onclick="updateStatus()" ${isChecked}>
-  <div class="heading">${name}</div>
-  <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
+    <input type="checkBox" class="check" onclick="updateStatus()" ${isChecked}>
+    <div class="heading">${name}</div>
+    <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
   </div>`;
 };
 
@@ -61,7 +36,7 @@ const displayTodo = function(todoId) {
     if (this.status === 201) {
       const tasks = JSON.parse(this.response).tasks;
       const todo = getElement('#todo');
-      todo.innerHTML = tasks.map(task => createBlock(task)).join('\n');
+      todo.innerHTML = tasks.map(task => taskAsHtml(task)).join('\n');
     }
   };
   newRequest('POST', 'loadTask', callBack, {todoId});
@@ -86,6 +61,23 @@ const createTodo = function() {
   newRequest('POST', 'saveTitle', callBack, {title});
 };
 
+const deleteTodo = function(todoId) {
+  const callBack = () => {
+    getElement('#todo').innerText = '';
+    hide('.myTasks');
+    erase(`${todoId}`);
+  };
+  newRequest('POST', 'deleteAllTodo', callBack, {todoId});
+  hide('.dialogBox');
+};
+
+const showDeleteDialogBox = function() {
+  const id = event.target.id;
+  show('.dialogBox');
+  getElement('.delete').setAttribute('onclick', `deleteTodo('${id}')`);
+  getElement('.cancel').setAttribute('onclick', 'hide(".dialogBox")');
+};
+
 const addNewTask = function(titleId) {
   const todoBlock = getElement('#todo');
   const textBox = getElement('#task');
@@ -93,10 +85,18 @@ const addNewTask = function(titleId) {
   textBox.value = '';
   const callBack = function() {
     const task = JSON.parse(this.response);
-    todoBlock.innerHTML += createBlock(task);
+    todoBlock.innerHTML += taskAsHtml(task);
   };
 
   newRequest('POST', 'saveTask', callBack, {name, titleId});
+};
+
+const deleteTask = function() {
+  const myTasks = getElement('.myTasks');
+  const todoId = myTasks.id.split('.').pop();
+  const taskId = event.target.parentElement.id;
+  const callBack = () => erase(`${taskId}`);
+  newRequest('POST', 'deleteTask', callBack, {todoId, taskId});
 };
 
 const updateStatus = function() {
@@ -126,19 +126,9 @@ const newRequest = function(method, url, callBack, reqMsg) {
 
 const renderIndex = function() {
   const index = getElement('#index');
-  index.classList.toggle('index');
-  if (index.className === 'hidden') {
-    getElement('#textArea').style.width = '1170px';
-    show('#index');
-    return;
-  }
-  hide('#index');
-  getElement('#textArea').style.width = '1370px';
+  index.classList.toggle('hidden');
 };
 
-// const displayTodoPage = () => {
-
-// }
 const attachClickEventListeners = () => {
   getElement('#fold').addEventListener('click', renderIndex);
   getElement('#saveTitle').addEventListener('click', createTodo);

@@ -141,7 +141,7 @@ describe('POST', function() {
         .post('/deleteTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({titleId: 'T_1581166399023', taskId: 'T_639'}))
+        .send(JSON.stringify({todoId: 'T_1581166399023', taskId: 'T_639'}))
         .expect('content-length', '0')
         .expect(STATUS_CODES.ok, done);
     });
