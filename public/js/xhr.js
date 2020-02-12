@@ -10,7 +10,7 @@ const erase = id => document.getElementById(id).remove();
 
 const tasksAsHtml = function (todoId, tasks) {
   return tasks.map(({ id, name, done }) => {
-    return `<div class="display" id="${id}">
+    return `<div class="display todoTask" id="${id}">
     <input type="checkBox" class="check" onclick="updateStatus()" ${done ? 'checked' : ''}>
     <div class="heading" contenteditable="true" onblur="editTask('${todoId}','${id}',this)">${name}</div>
     <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
