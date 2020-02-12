@@ -17,7 +17,7 @@ const tasksAsHtml = function (todoId, tasks, searchText) {
   return tasks.map(({ id, name, done }) => {
     return `<div class="display todoTask" id="${id}">
     <input type="checkBox" class="check" onclick="updateStatus()" ${done ? 'checked' : ''}>
-    <div class="heading" contenteditable="true" onblur="editTask('${todoId}','${id}',this)">
+    <div class="taskName" contenteditable="true" onblur="editTask('${todoId}','${id}',this)">
       ${highlightText(name, searchText)}
     </div>
     <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
@@ -60,7 +60,7 @@ const displayTodo = function (todoId) {
 
 const addToTodoList = function ({ id, title }) {
   const todoLists = getElement('#allTodos');
-  const html = `<div class="project" id="${id}" onclick="displayTodo('${id}')">
+  const html = `<div class="todoTitle" id="${id}" onclick="displayTodo('${id}')">
      ${title} 
      </div>`;
   todoLists.innerHTML += html;
@@ -153,7 +153,7 @@ const filterTodo = function () {
   const callback = function () {
     const matchedTodos = JSON.parse(this.response);
     const form = getElement('#myAllTasks');
-    form.innerHTML = matchedTodos.map(todo => todoBlockAsHtml(todo, searchValue)).join(',');
+    form.innerHTML = matchedTodos.map(todo => todoBlockAsHtml(todo, searchValue)).join('');
   };
   newRequest('POST', 'filterTodo', callback, { searchValue });
 };
