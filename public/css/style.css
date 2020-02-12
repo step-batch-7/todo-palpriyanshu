@@ -1,14 +1,8 @@
-#index {
-  width: 400px;
-  height: 760px;
-  border: 0.5px solid black;
-  background-color: #222222;
-}
-
 .body {
   background-color: gray;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
+  margin: 0;
   display: flex;
   text-align: left;
   justify-content: end;
@@ -16,15 +10,22 @@
 }
 
 #textArea {
-  width: 1170px;
-  height: 760px;
+  width: 100vw;
+  height: 99.9vh;
+  border: 0.5px solid black;
+  background-color: #222222;
+}
+
+#index {
+  width: 400px;
+  height: 99.9vh;
   border: 0.5px solid black;
   background-color: #222222;
 }
 
 .sideBar {
   width: 50px;
-  height: 760px;
+  height: 99.9vh;
   border: 0.5px solid black;
   background-color: #444444;
 }
@@ -61,15 +62,19 @@
 #titleBar {
   width: 100%;
   height: 5%;
-  font-size: 18px;
+  font-size: 1.5em;
   font-weight: 200;
   background-color: #444444;
   margin: 0;
   display: flex;
   justify-content: space-between;
-  padding: 2%;
+  padding: 0 0 2vh 1vw;
 }
 
+#saveTitle {
+  -webkit-appearance: button;
+  height: 30px;
+}
 .project {
   background-color: #555555;
   margin: 2px;
@@ -92,12 +97,19 @@
   color: white;
 }
 
+.myTasks{
+  margin:5vh 0 0 5vw;
+  width: 65vw;
+}
 .display {
   display: flex;
 }
-
+.todoTask:hover > img{
+  display: inline;
+}
 .check {
-  zoom: 2;
+  margin-top: 1.5vh;
+  zoom: 1.5;
 }
 
 #addButton {
@@ -119,6 +131,7 @@
   width: 20px;
   height: 20px;
   zoom: 1.5;
+  display: none;
   background-color: white;
   border-radius: 10px;
   color: black;
@@ -132,20 +145,29 @@
   margin: 2% 0 0 0;
 }
 
+.header{
+  height: 7vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.appHeading{
+  margin-left: 3vw;
+  font-weight: 500;
+}
+
 .searchBar {
-  width: 25%;
-  border: none;
-  top: -60px;
-  left: 68%;
-  color: #ccc;
+  width: 20vw;
+  margin: 3vh 0 0 30vw;
   outline: none;
-  font-size: 8px;
-  word-spacing: 10px;
-  font-weight: 200;
-  position: relative;
+  border: none;
   border-bottom: 1px solid #aaa;
-  background-color: transparent;
+  position: relative;
   font-size: 24px;
+  font-weight: 200;
+  word-spacing: 10px;
+  color: #ccc;
+  background-color: transparent;
 }
 
 .task {
@@ -172,4 +194,11 @@
 .title{
   font-size: 1.5em;
   outline: none;
+}
+
+.check,
+#addButton,
+.sideBar > img,
+.minus:hover{
+  cursor: pointer;
 }
