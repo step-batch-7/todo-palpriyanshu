@@ -11,21 +11,23 @@
 
   <body class="body">
     <div id="textArea">
-      <h1>MY TASKS</h1>
-      <input placeholder="search here" class="searchBar" required />
+      <div class="header">
+        <h1 class="appHeading">MY TASKS</h1>
+        <input placeholder="search here" class="searchBar" required />
+      </div>
       <div id="myAllTasks"></div>
     </div>
 
     <div id="index">
       <div id="titleBar">
-        <p>todo</p>
+        <p>Todo Lists</p>
       </div>
       <div class="project">
         <input placeholder="add Title" type="text" id="titlePlace" class="heading" required />
         <input type="button" value="save" id="saveTitle" />
       </div>
       <div class="dialogBox hidden">
-        <p>Are you sure to delete</p>
+        <div class="title">Are you sure to delete</div>
         <input type="button" value="delete" class="delete button" />
         <input type="button" value="cancel" class="cancel button" />
       </div>
