@@ -7,7 +7,7 @@ const show = selector => getElement(selector).classList.remove('hidden');
 const erase = id => document.getElementById(id).remove();
 
 const tasksAsHtml = function (tasks) {
-  return tasks.map(({ id, name, done }) => {
+  return tasks.map(({id, name, done}) => {
     return `<div class="display" id="${id}">
     <input type="checkBox" class="check" onclick="updateStatus()" ${done ? 'checked' : ''}>
     <div class="heading">${name}</div>
@@ -21,7 +21,7 @@ const todoBlockAsHtml = function (id, title, tasks) {
   return `
   <div class="myTasks" id="c.${id}">
     <div class="display">
-      <div class="title" contenteditable="true" onkeyup="editTitle('${id}',this)"> ${title}</div>
+      <span class="title" contenteditable="true" onblur="editTitle('${id}',this)"> ${title}</span>
       <div class="editIcon">
         <img src="../images/pencil.png" alt="image not found"/>
       </div>
@@ -39,15 +39,15 @@ const todoBlockAsHtml = function (id, title, tasks) {
 const displayTodo = function (todoId) {
   const callBack = function () {
     if (this.status === 201) {
-      const { id, title, tasks } = JSON.parse(this.response);
+      const {id, title, tasks} = JSON.parse(this.response);
       const myAllTasks = getElement('#myAllTasks');
       myAllTasks.innerHTML = todoBlockAsHtml(id, title, tasks);
     }
   };
-  newRequest('POST', 'loadTask', callBack, { todoId });
+  newRequest('POST', 'loadTask', callBack, {todoId});
 };
 
-const addToTodoList = function ({ id, title }) {
+const addToTodoList = function ({id, title}) {
   const todoLists = getElement('#allTodos');
   const html = `<div class="project" id="${id}" onclick="displayTodo('${id}')">
      ${title} 
@@ -64,7 +64,7 @@ const createTodo = function () {
       addToTodoList(JSON.parse(this.response));
     }
   };
-  newRequest('POST', 'saveTitle', callBack, { title });
+  newRequest('POST', 'saveTitle', callBack, {title});
 };
 
 const deleteTodo = function (todoId) {
@@ -73,7 +73,7 @@ const deleteTodo = function (todoId) {
     hide('.myTasks');
     erase(`${todoId}`);
   };
-  newRequest('POST', 'deleteAllTodo', callBack, { todoId });
+  newRequest('POST', 'deleteAllTodo', callBack, {todoId});
   hide('.dialogBox');
 };
 
@@ -91,10 +91,10 @@ const addNewTask = function (titleId) {
   textBox.value = '';
   const callBack = function () {
     const task = JSON.parse(this.response);
-    todoBlock.innerHTML += taskAsHtml(task);
+    todoBlock.innerHTML += tasksAsHtml(task);
   };
 
-  newRequest('POST', 'saveTask', callBack, { name, titleId });
+  newRequest('POST', 'saveTask', callBack, {name, titleId});
 };
 
 const deleteTask = function () {
@@ -102,18 +102,17 @@ const deleteTask = function () {
   const todoId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
   const callBack = () => erase(`${taskId}`);
-  newRequest('POST', 'deleteTask', callBack, { todoId, taskId });
+  newRequest('POST', 'deleteTask', callBack, {todoId, taskId});
 };
 
 const updateStatus = function () {
   const myTasks = getElement('.myTasks');
   const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
-  newRequest('POST', 'updateTaskStatus', true, { titleId, taskId });
+  newRequest('POST', 'updateTaskStatus', true, {titleId, taskId});
 };
 
 const editTitle = function (todoId, titleDivision) {
-  const title = titleDivision.innerText;
   const callBack = function () {
     const newTitle = JSON.parse(this.response);
     const title = getElement('.title');
@@ -121,10 +120,10 @@ const editTitle = function (todoId, titleDivision) {
     title.innerText = newTitle;
     todo.innerText = newTitle;
   };
-  if (event.key === 'Enter' && title.innerText !== '') {
-    newRequest('POST', 'editTitle', callBack, { todoId, title });
-  }
+  const title = titleDivision.innerText;
+  newRequest('POST', 'editTitle', callBack, {todoId, title});
 };
+
 const filterTodo = function () {
   const searchValue = event.target.value;
   const callback = function () {
@@ -133,7 +132,7 @@ const filterTodo = function () {
     const form = getElement('#myAllTasks');
     form.innerHTML = '';
   };
-  newRequest('POST', 'filterTodo', callback, { searchValue });
+  newRequest('POST', 'filterTodo', callback, {searchValue});
 };
 
 const newRequest = function (method, url, callBack, reqMsg) {
