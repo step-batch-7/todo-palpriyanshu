@@ -1,5 +1,5 @@
 const request = require('supertest');
-const {truncateSync, readFileSync, writeFileSync} = require('fs');
+const { truncateSync, readFileSync, writeFileSync } = require('fs');
 const config = require('../config.js');
 
 const STATUS_CODES = require('../lib/statusCodes.js');
@@ -93,7 +93,7 @@ describe('POST', function () {
         .post('/loadTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({todoId: 'T_1581166471934'}))
+        .send(JSON.stringify({ todoId: 'T_1581166471934' }))
         .expect('content-length', '146')
         .expect(STATUS_CODES.create, done);
     });
@@ -105,7 +105,7 @@ describe('POST', function () {
         .post('/updateTaskStatus')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({titleId: 'T_1581166399023', taskId: 'T_639'}))
+        .send(JSON.stringify({ titleId: 'T_1581166399023', taskId: 'T_639' }))
         .expect('content-length', '0')
         .expect(STATUS_CODES.ok, done);
     });
@@ -117,7 +117,7 @@ describe('POST', function () {
         .post('/saveTitle')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({title: 'maths'}))
+        .send(JSON.stringify({ title: 'maths' }))
         .expect('content-length', '40')
         .expect(STATUS_CODES.create, done);
     });
@@ -129,7 +129,7 @@ describe('POST', function () {
         .post('/saveTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({name: 'shapes', titleId: 'T_1581166399023'}))
+        .send(JSON.stringify({ name: 'shapes', todoId: 'T_1581166399023' }))
         .expect('content-length', '53')
         .expect(STATUS_CODES.create, done);
     });
@@ -141,7 +141,7 @@ describe('POST', function () {
         .post('/deleteTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({todoId: 'T_1581166399023', taskId: 'T_639'}))
+        .send(JSON.stringify({ todoId: 'T_1581166399023', taskId: 'T_639' }))
         .expect('content-length', '0')
         .expect(STATUS_CODES.ok, done);
     });
@@ -153,7 +153,7 @@ describe('POST', function () {
         .post('/deleteAllTodo')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
-        .send(JSON.stringify({titleId: 'T_1581166399023'}))
+        .send(JSON.stringify({ titleId: 'T_1581166399023' }))
         .expect('content-length', '0')
         .expect(STATUS_CODES.ok, done);
     });
@@ -176,7 +176,7 @@ describe('POST', function () {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1672')
+        .expect('content-length', '1617')
         .expect(STATUS_CODES.ok, done);
     });
   });
