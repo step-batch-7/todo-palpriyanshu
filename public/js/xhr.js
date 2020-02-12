@@ -19,7 +19,7 @@ const tasksAsHtml = function (todoId, tasks) {
     .join('\n');
 };
 
-const todoBlockAsHtml = function (id, title, tasks) {
+const todoBlockAsHtml = function ({ id, title, tasks }) {
   return `
   <div class="myTasks" id="c.${id}">
     <div class="display">
@@ -38,12 +38,12 @@ const todoBlockAsHtml = function (id, title, tasks) {
   </div>`;
 };
 
-const displayTodo = function (todoId) {
+const displayTodos = function (todoId) {
   const callBack = function () {
     if (this.status === 201) {
-      const { id, title, tasks } = JSON.parse(this.response);
+      const todos = JSON.parse(this.response);
       const myAllTasks = getElement('#myAllTasks');
-      myAllTasks.innerHTML = todoBlockAsHtml(id, title, tasks);
+      myAllTasks.innerHTML = todos.map(todo => todoBlockAsHtml(todo));
     }
   };
   newRequest('POST', 'loadTask', callBack, { todoId });
@@ -51,7 +51,7 @@ const displayTodo = function (todoId) {
 
 const addToTodoList = function ({ id, title }) {
   const todoLists = getElement('#allTodos');
-  const html = `<div class="project" id="${id}" onclick="displayTodo('${id}')">
+  const html = `<div class="project" id="${id}" onclick="displayTodos('${id}')">
      ${title} 
      </div>`;
   todoLists.innerHTML += html;
@@ -136,6 +136,7 @@ const editTask = function (todoId, taskId, taskDivision) {
   const name = taskDivision.innerText;
   newRequest('POST', 'editTask', callBack, { todoId, taskId, name });
 }
+
 const filterTodo = function () {
   const searchValue = event.target.value;
   const callback = function () {
