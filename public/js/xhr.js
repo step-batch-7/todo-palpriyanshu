@@ -29,7 +29,7 @@ const todoBlockAsHtml = function ({ id, title, tasks }) {
       </div>
     </div>
     <div id="taskInput" class="display">
-      <input placeholder="add Task" type="text" id="task" required />
+      <input placeholder="add Task" type="text" class="task" required />
       <img src="../images/plus.png" class="titleImg" id="addButton" onclick = "addNewTask('${id}')"/>
     </div>
     <br />
@@ -38,7 +38,7 @@ const todoBlockAsHtml = function ({ id, title, tasks }) {
   </div>`;
 };
 
-const displayTodos = function (todoId) {
+const displayTodo = function (todoId) {
   const callBack = function () {
     if (this.status === 201) {
       const todos = JSON.parse(this.response);
@@ -51,7 +51,7 @@ const displayTodos = function (todoId) {
 
 const addToTodoList = function ({ id, title }) {
   const todoLists = getElement('#allTodos');
-  const html = `<div class="project" id="${id}" onclick="displayTodos('${id}')">
+  const html = `<div class="project" id="${id}" onclick="displayTodo('${id}')">
      ${title} 
      </div>`;
   todoLists.innerHTML += html;
@@ -87,13 +87,15 @@ const showDeleteDialogBox = function () {
 };
 
 const addNewTask = function (todoId) {
-  const todoBlock = getElement('#todo');
-  const textBox = getElement('#task');
+  const todoDivision = document.getElementById(`c.${todoId}`);
+  const taskDivision = getChildElement(todoDivision, "#todo");
+  const taskInput = getChildElement(todoDivision, '#taskInput')
+  const textBox = getChildElement(taskInput, ".task");
   const name = textBox.value;
   textBox.value = '';
   const callBack = function () {
     const task = JSON.parse(this.response);
-    todoBlock.innerHTML += tasksAsHtml(todoId, [task]);
+    taskDivision.innerHTML += tasksAsHtml(todoId, [task]);
   };
 
   newRequest('POST', 'saveTask', callBack, { name, todoId });
@@ -140,10 +142,9 @@ const editTask = function (todoId, taskId, taskDivision) {
 const filterTodo = function () {
   const searchValue = event.target.value;
   const callback = function () {
-    const matchedValue = JSON.parse(this.response);
-    console.log(this.response);
+    const matchedTodos = JSON.parse(this.response);
     const form = getElement('#myAllTasks');
-    form.innerHTML = '';
+    form.innerHTML = matchedTodos.map(todo => todoBlockAsHtml(todo));
   };
   newRequest('POST', 'filterTodo', callback, { searchValue });
 };
