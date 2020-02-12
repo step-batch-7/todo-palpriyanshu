@@ -123,6 +123,30 @@ describe('POST', function () {
     });
   });
 
+  context('request for editTitle', function () {
+    it('should parse JSON & respond with 201 create', function (done) {
+      request(app.serveRequest.bind(app))
+        .post('/editTitle')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ todoId: "T_1581166471934", title: 'rasogullas' }))
+        .expect('content-length', '12')
+        .expect(STATUS_CODES.create, done);
+    });
+  });
+
+  context('request for editTask', function () {
+    it('should parse JSON & respond with 201 create', function (done) {
+      request(app.serveRequest.bind(app))
+        .post('/editTask')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ todoId: "T_1581166399023", taskId: "T_639", name: 'apple' }))
+        .expect('content-length', '7')
+        .expect(STATUS_CODES.create, done);
+    });
+  });
+
   context('request for saveTask', function () {
     it('should parse JSON & respond with 201 create', function (done) {
       request(app.serveRequest.bind(app))
@@ -176,7 +200,7 @@ describe('POST', function () {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1617')
+        .expect('content-length', '1706')
         .expect(STATUS_CODES.ok, done);
     });
   });
