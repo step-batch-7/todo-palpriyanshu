@@ -9,13 +9,7 @@ const createSampleTODO = function () {
   writeFileSync(config.DATA_STORE, sampleContent, 'utf8');
 };
 
-createSampleTODO();
-
 const app = require('../lib/handler.js');
-
-after(() => {
-  truncateSync(config.DATA_STORE);
-});
 
 describe('GET', function () {
   context('request for file that does not exist', function () {
@@ -87,6 +81,10 @@ describe('PUT', function () {
 });
 
 describe('POST', function () {
+  beforeEach(() => createSampleTODO());
+  afterEach(() => {
+    truncateSync(config.DATA_STORE);
+  });
   context('request for loadTask', function () {
     it('should parse JSON & respond with 201', function (done) {
       request(app.serveRequest.bind(app))
@@ -147,6 +145,48 @@ describe('POST', function () {
     });
   });
 
+  context('request for filterTodo', function () {
+    it('should filter by titleName & parse JSON & respond with 201 create', function (done) {
+      request(app.serveRequest.bind(app))
+        .post('/filterTodo')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ searchValue: "Food" }))
+        .expect('content-length', '194')
+        .expect(STATUS_CODES.create, done);
+    });
+
+    it('should filter by taskName & parse JSON & respond with 201 create', function (done) {
+      request(app.serveRequest.bind(app))
+        .post('/filterTodo')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ searchValue: "Maths" }))
+        .expect('content-length', '98')
+        .expect(STATUS_CODES.create, done);
+    });
+
+    it('should return no content when searchText is not matched with anyone', function (done) {
+      request(app.serveRequest.bind(app))
+        .post('/filterTodo')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ searchValue: "Science" }))
+        .expect('content-length', '2')
+        .expect(STATUS_CODES.create, done);
+    });
+
+    it('should return empty array when searchText is empty String', function (done) {
+      request(app.serveRequest.bind(app))
+        .post('/filterTodo')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ searchValue: "" }))
+        .expect('content-length', '2')
+        .expect(STATUS_CODES.create, done);
+    });
+  });
+
   context('request for saveTask', function () {
     it('should parse JSON & respond with 201 create', function (done) {
       request(app.serveRequest.bind(app))
@@ -200,7 +240,7 @@ describe('POST', function () {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1706')
+        .expect('content-length', '1704')
         .expect(STATUS_CODES.ok, done);
     });
   });
