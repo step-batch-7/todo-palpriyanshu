@@ -195,7 +195,9 @@
   font-size: 1.5em;
   outline: none;
 }
-
+.highlight{
+  background-color: rgba(128, 128, 128, 0.8);
+}
 .check,
 #addButton,
 .sideBar > img,

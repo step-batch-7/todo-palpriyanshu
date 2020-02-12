@@ -8,22 +8,31 @@ const show = selector => getElement(selector).classList.remove('hidden');
 
 const erase = id => document.getElementById(id).remove();
 
-const tasksAsHtml = function (todoId, tasks) {
+const highlightText = (text, searchText) => {
+  const highlightedText = `<span class="highlight">${searchText}</span>`;
+  return text.replace(searchText, highlightedText);
+}
+
+const tasksAsHtml = function (todoId, tasks, searchText) {
   return tasks.map(({ id, name, done }) => {
     return `<div class="display todoTask" id="${id}">
     <input type="checkBox" class="check" onclick="updateStatus()" ${done ? 'checked' : ''}>
-    <div class="heading" contenteditable="true" onblur="editTask('${todoId}','${id}',this)">${name}</div>
+    <div class="heading" contenteditable="true" onblur="editTask('${todoId}','${id}',this)">
+      ${highlightText(name, searchText)}
+    </div>
     <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
   </div>`;
   })
     .join('\n');
 };
 
-const todoBlockAsHtml = function ({ id, title, tasks }) {
+const todoBlockAsHtml = function ({ id, title, tasks }, searchText) {
   return `
   <div class="myTasks" id="c.${id}">
     <div class="display">
-      <span class="title" contenteditable="true" onblur="editTitle('${id}',this)"> ${title}</span>
+      <span class="title" contenteditable="true" onblur="editTitle('${id}',this)">
+        ${highlightText(title, searchText)}
+      </span>
       <div class="editIcon">
         <img src="../images/pencil.png" alt="image not found"/>
       </div>
@@ -34,7 +43,7 @@ const todoBlockAsHtml = function ({ id, title, tasks }) {
     </div>
     <br />
     <br />
-    <div id="todo">${tasksAsHtml(id, tasks)} </div>
+    <div id="todo">${tasksAsHtml(id, tasks, searchText)} </div>
   </div>`;
 };
 
@@ -144,7 +153,7 @@ const filterTodo = function () {
   const callback = function () {
     const matchedTodos = JSON.parse(this.response);
     const form = getElement('#myAllTasks');
-    form.innerHTML = matchedTodos.map(todo => todoBlockAsHtml(todo));
+    form.innerHTML = matchedTodos.map(todo => todoBlockAsHtml(todo, searchValue)).join(',');
   };
   newRequest('POST', 'filterTodo', callback, { searchValue });
 };
