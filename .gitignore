@@ -1,3 +1,4 @@
 node_modules
-dataStore/todoNotes.json
 .nyc_output
+dataStore/
+test/todoListTest.js
