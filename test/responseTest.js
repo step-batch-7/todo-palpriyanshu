@@ -35,7 +35,7 @@ describe('GET', function() {
         .get('/login.html')
         .set('Accept', '*/*')
         .expect('content-type', /html/)
-        .expect('content-length', '849')
+        .expect('content-length', '949')
         .expect(STATUS_CODES.ok, done);
     });
 
