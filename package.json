@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "export DATA_STORE=$(pwd)/test/resources/todoStore.json;export SAMPLE_TODO=$(pwd)/test/resources/sampleTodoStore.json ; nyc mocha",
-    "start": "export DATA_STORE=$(pwd)/dataStore/todoNotes.json; node server.js"
+    "start": "export DATA_STORE=$(pwd)/dataStore/todoNotes.json;export USERS_STORE=$(pwd)/dataStore/usersInfo.json; node server.js"
   },
   "repository": {
     "type": "git",
