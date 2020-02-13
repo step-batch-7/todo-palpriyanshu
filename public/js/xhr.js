@@ -84,7 +84,7 @@ const deleteTodo = function (todoId) {
     hide('.myTasks');
     erase(`${todoId}`);
   };
-  newRequest('POST', 'deleteAllTodo', callBack, { todoId });
+  newRequest('DELETE', 'deleteAllTodo', callBack, { todoId });
   hide('.dialogBox');
 };
 
@@ -115,14 +115,14 @@ const deleteTask = function () {
   const todoId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
   const callBack = () => erase(`${taskId}`);
-  newRequest('POST', 'deleteTask', callBack, { todoId, taskId });
+  newRequest('DELETE', 'deleteTask', callBack, { todoId, taskId });
 };
 
 const updateStatus = function () {
   const myTasks = getElement('.myTasks');
   const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
-  newRequest('POST', 'updateTaskStatus', true, { titleId, taskId });
+  newRequest('PATCH', 'updateTaskStatus', true, { titleId, taskId });
 };
 
 const editTitle = function (todoId, titleDivision) {

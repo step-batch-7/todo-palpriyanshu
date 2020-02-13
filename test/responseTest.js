@@ -97,17 +97,7 @@ describe('POST', function () {
     });
   });
 
-  context('request for updateTaskStatus', function () {
-    it('should parse JSON & respond with 200', function (done) {
-      request(app.serveRequest.bind(app))
-        .post('/updateTaskStatus')
-        .set('Accept', '*/*')
-        .set('content-type', 'application/json')
-        .send(JSON.stringify({ titleId: 'T_1581166399023', taskId: 'T_639' }))
-        .expect('content-length', '0')
-        .expect(STATUS_CODES.ok, done);
-    });
-  });
+
 
   context('request for saveTitle', function () {
     it('should parse JSON & respond with 201 create', function (done) {
@@ -199,30 +189,6 @@ describe('POST', function () {
     });
   });
 
-  context('request for deleteTask', function () {
-    it('should parse JSON & respond with 200', function (done) {
-      request(app.serveRequest.bind(app))
-        .post('/deleteTask')
-        .set('Accept', '*/*')
-        .set('content-type', 'application/json')
-        .send(JSON.stringify({ todoId: 'T_1581166399023', taskId: 'T_639' }))
-        .expect('content-length', '0')
-        .expect(STATUS_CODES.ok, done);
-    });
-  });
-
-  context('request for deleteAllTodo', function () {
-    it('should parse JSON & respond with 200', function (done) {
-      request(app.serveRequest.bind(app))
-        .post('/deleteAllTodo')
-        .set('Accept', '*/*')
-        .set('content-type', 'application/json')
-        .send(JSON.stringify({ titleId: 'T_1581166399023' }))
-        .expect('content-length', '0')
-        .expect(STATUS_CODES.ok, done);
-    });
-  });
-
   context('request for todoPage', function () {
     it('should parse queryString & respond with 303', function (done) {
       request(app.serveRequest.bind(app))
@@ -240,7 +206,56 @@ describe('POST', function () {
         .get('/template/todoPage.html')
         .set('Accept', '*/*')
         .expect('Content-Type', /html/)
-        .expect('content-length', '1704')
+        .expect('content-length', '1712')
+        .expect(STATUS_CODES.ok, done);
+    });
+  });
+});
+
+describe("PATCH", function () {
+  before(() => createSampleTODO());
+  after(() => {
+    truncateSync(config.DATA_STORE);
+  });
+  context('request for updateTaskStatus', function () {
+    it('should parse JSON & respond with 200', function (done) {
+      request(app.serveRequest.bind(app))
+        .patch('/updateTaskStatus')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ titleId: 'T_1581166399023', taskId: 'T_639' }))
+        .expect('content-length', '0')
+        .expect(STATUS_CODES.ok, done);
+    });
+  })
+})
+
+describe("DELETE", function () {
+
+  beforeEach(() => createSampleTODO());
+  afterEach(() => {
+    truncateSync(config.DATA_STORE);
+  });
+  context('request for deleteTask', function () {
+    it('should parse JSON & respond with 200', function (done) {
+      request(app.serveRequest.bind(app))
+        .delete('/deleteTask')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ todoId: 'T_1581166399023', taskId: 'T_639' }))
+        .expect('content-length', '0')
+        .expect(STATUS_CODES.ok, done);
+    });
+  });
+
+  context('request for deleteAllTodo', function () {
+    it('should parse JSON & respond with 200', function (done) {
+      request(app.serveRequest.bind(app))
+        .delete('/deleteAllTodo')
+        .set('Accept', '*/*')
+        .set('content-type', 'application/json')
+        .send(JSON.stringify({ titleId: 'T_1581166399023' }))
+        .expect('content-length', '0')
         .expect(STATUS_CODES.ok, done);
     });
   });
