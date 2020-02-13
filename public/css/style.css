@@ -1,3 +1,54 @@
+#homepage {
+  text-align: center;
+  margin: 0px 150px;
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+.loginBlock{
+  width: 30vw;
+  height: 33vh;
+  margin: 5vh 0 0 23vw;
+  padding-top: 3vh;
+  border: solid rgba(0, 0, 0,0.2) 1px;
+  border-radius: 5px;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+.loginBlock:hover{
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5)
+}
+.inputBlock {
+  width: 20vw;
+  height: 25px;
+  margin: 3vh 0 0 0;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 200;
+  border: none;
+  border-bottom: solid rgba(0, 0, 0,0.2) 1px;
+  outline: none;
+  background: transparent;
+}
+
+.submitBlock {
+  width: 20vw;
+  height: 3vh;
+  margin: 6vh 0 4vh 0;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 300;
+  background-color: rgba(200, 200, 200, 0.8);
+  border: 1px solid #bbb;
+  border-radius: 50px;
+  outline: none;
+}
+.signInLink{
+  text-decoration: none;
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.signInLink:hover{
+  color: rgba(0, 0, 0, 1);
+}
 .body {
   background-color: gray;
   font-family: Arial, Helvetica, sans-serif;
@@ -41,35 +92,6 @@
 .newTodo{
   margin: 1vh 0 0 1vw;
   height: 5vh;
-}
-
-#homepage {
-  text-align: center;
-  margin: 0px 150px;
-  background-color: rgba(200, 200, 200, 0.5);
-}
-
-.submitBlock {
-  width: 100px;
-  height: 25px;
-  margin: 0 30%;
-  padding: 0;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: #bbbbbb;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-}
-
-.inputBlock {
-  width: 20%;
-  height: 25px;
-  margin: 0 3% 10px;
-  padding: 5px;
-  font-size: 18px;
-  font-weight: 200;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 #titleBar {
@@ -226,6 +248,7 @@
 #addButton,
 .sideBar > img,
 .minus:hover,
-#saveTitle{
+#saveTitle,
+.submitBlock{
   cursor: pointer;
 }
