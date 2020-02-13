@@ -1,0 +1,2 @@
+export DATA_STORE=./dataStore/todoNotes.json;
+export USERS_STORE=./dataStore/usersInfo.json; 
