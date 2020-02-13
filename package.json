@@ -7,8 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "export DATA_STORE=$(pwd)/test/resources/todoStore.json;export SAMPLE_TODO=$(pwd)/test/resources/sampleTodoStore.json ; nyc mocha",
-    "start": "export DATA_STORE=$(pwd)/dataStore/todoNotes.json;export USERS_STORE=$(pwd)/dataStore/usersInfo.json; node server.js"
+    "test": " (source _test_env; nyc mocha)",
+    "start": "(source _env; node server.js)",
+    "live": "(source _env; nodemon -i dataStore server.js)"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,8 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "express": "^4.17.1"
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
   }
 }
