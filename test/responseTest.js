@@ -27,7 +27,7 @@ describe('GET', function () {
         .get('/')
         .set('Accept', '*/*')
         .expect('content-type', /html/)
-        .expect('content-length', '602')
+        .expect('content-length', '815')
         .expect(STATUS_CODES.ok, done);
     });
 
@@ -36,7 +36,7 @@ describe('GET', function () {
         .get('/index.html')
         .set('Accept', '*/*')
         .expect('content-type', /html/)
-        .expect('content-length', '602')
+        .expect('content-length', '815')
         .expect(STATUS_CODES.ok, done);
     });
 
