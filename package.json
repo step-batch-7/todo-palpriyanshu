@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": " (source _test_env; nyc mocha)",
+    "test": "(source _test_env; nyc mocha)",
     "start": "(source _env; node server.js)",
     "live": "(source _env; nodemon -i dataStore server.js)"
   },

@@ -9,12 +9,14 @@ const createSampleTODO = function() {
   writeFileSync(config.DATA_STORE, sampleContent, 'utf8');
 };
 
-const app = require('../lib/handler.js');
+const server = require('../server');
+
+after(() => server.close());
 
 describe('GET', function() {
   context('request for file that does not exist', function() {
     it('should respond with 404 notFound"', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .get('/badFile')
         .set('Accept', '*/*')
         .expect(STATUS_CODES.notFound, done);
@@ -23,15 +25,15 @@ describe('GET', function() {
 
   context('request for html file', function() {
     it('should redirect to todoPage when url is "/" and user is not logged in', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .get('/')
         .set('Accept', '*/*')
-        .expect('location', '/template/todoPage.html')
+        .expect('location', '/todo')
         .expect(STATUS_CODES.redirect, done);
     });
 
     it('should respond with login page when url is "/login.html"', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .get('/login.html')
         .set('Accept', '*/*')
         .expect('content-type', /html/)
@@ -40,8 +42,8 @@ describe('GET', function() {
     });
 
     it('should redirect to login page when url is "/template/todoPage.html" and user is not logged in', function(done) {
-      request(app.serveRequest.bind(app))
-        .get('/template/todoPage.html')
+      request(server)
+        .get('/todo')
         .set('Accept', '*/*')
         .expect('location', '/login.html')
         .expect(STATUS_CODES.redirect, done);
@@ -50,7 +52,7 @@ describe('GET', function() {
 
   context('request for css file', function() {
     it('should respond with styleSheet when url is "/css/style.css"', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .get('/css/style.css')
         .set('Accept', '*/*')
         .expect('content-type', /css/)
@@ -60,7 +62,7 @@ describe('GET', function() {
 
   context('request for png file', function() {
     it('should respond with image when url is "/images/folder.png"', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .get('/images/folder.png')
         .set('Accept', '*/*')
         .expect('content-type', /png/)
@@ -72,7 +74,7 @@ describe('GET', function() {
 
 describe('PUT', function() {
   it('should respond with 404 when method is not allowed', function(done) {
-    request(app.serveRequest.bind(app))
+    request(server)
       .put('/index.html')
       .set('Accept', '*/*')
       .expect(STATUS_CODES.notFound, done);
@@ -86,43 +88,43 @@ describe('POST', function() {
   });
   context('request for loadTask', function() {
     it('should parse JSON & respond with 201', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/loadTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({todoId: 'T_1581166471934'}))
         .expect('content-length', '148')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
   });
 
   context('request for saveTitle', function() {
     it('should parse JSON & respond with 201 create', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/saveTitle')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({title: 'maths'}))
         .expect('content-length', '40')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
   });
 
   context('request for editTitle', function() {
     it('should parse JSON & respond with 201 create', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/editTitle')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({todoId: 'T_1581166471934', title: 'rasogullas'}))
         .expect('content-length', '12')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
   });
 
   context('request for editTask', function() {
     it('should parse JSON & respond with 201 create', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/editTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
@@ -134,61 +136,61 @@ describe('POST', function() {
           })
         )
         .expect('content-length', '7')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
   });
 
   context('request for filterTodo', function() {
     it('should filter by titleName & parse JSON & respond with 201 create', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/filterTodo')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({searchValue: 'Food'}))
         .expect('content-length', '194')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
 
     it('should filter by taskName & parse JSON & respond with 201 create', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/filterTodo')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({searchValue: 'Maths'}))
         .expect('content-length', '98')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
 
     it('should return no content when searchText is not matched with anyone', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/filterTodo')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({searchValue: 'Science'}))
         .expect('content-length', '2')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
 
     it('should return empty array when searchText is empty String', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/filterTodo')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({searchValue: ''}))
         .expect('content-length', '2')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
   });
 
   context('request for saveTask', function() {
     it('should parse JSON & respond with 201 create', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .post('/saveTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
         .send(JSON.stringify({name: 'shapes', todoId: 'T_1581166399023'}))
         .expect('content-length', '53')
-        .expect(STATUS_CODES.create, done);
+        .expect(STATUS_CODES.ok, done);
     });
   });
 });
@@ -200,7 +202,7 @@ describe('PATCH', function() {
   });
   context('request for updateTaskStatus', function() {
     it('should parse JSON & respond with 200', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .patch('/updateTaskStatus')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
@@ -218,7 +220,7 @@ describe('DELETE', function() {
   });
   context('request for deleteTask', function() {
     it('should parse JSON & respond with 200', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .delete('/deleteTask')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')
@@ -230,7 +232,7 @@ describe('DELETE', function() {
 
   context('request for deleteAllTodo', function() {
     it('should parse JSON & respond with 200', function(done) {
-      request(app.serveRequest.bind(app))
+      request(server)
         .delete('/deleteAllTodo')
         .set('Accept', '*/*')
         .set('content-type', 'application/json')

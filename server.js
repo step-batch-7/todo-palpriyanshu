@@ -23,16 +23,6 @@ const {
 const port = 4000;
 const app = express();
 
-const hasFields = (...fields) => {
-  return function(req, res, next) {
-    if (fields.every(field => field in req.body)) {
-      next();
-    }
-    res.statusCode = 400;
-    res.end('bad request');
-  };
-};
-
 app.use(morgan('tiny'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -59,4 +49,8 @@ app.post('', notFound);
 
 app.use(methodNotAllowed);
 
-app.listen(port, () => stdout.write(`server listening on ${port}`));
+const server = app.listen(port, () =>
+  stdout.write(`server listening on ${port}\n`)
+);
+
+module.exports = server;

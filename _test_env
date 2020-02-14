@@ -1,2 +1,2 @@
-export DATA_STORE=$(pwd)/test/resources/todoStore.json;
-export SAMPLE_TODO=$(pwd)/test/resources/sampleTodoStore.json
+export DATA_STORE=./test/resources/todoStore.json;
+export SAMPLE_TODO=./test/resources/sampleTodoStore.json;
