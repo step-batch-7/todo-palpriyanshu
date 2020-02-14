@@ -4,11 +4,12 @@
   background-color: rgba(200, 200, 200, 0.5);
 }
 
-.loginBlock {
+.loginBlock,
+.signInBlock {
   width: 30vw;
-  height: 33vh;
   margin: 5vh 0 0 23vw;
   padding-top: 3vh;
+  padding-bottom: 5vh;
   border: solid rgba(0, 0, 0, 0.2) 1px;
   border-radius: 5px;
   background-color: rgba(200, 200, 200, 0.2);

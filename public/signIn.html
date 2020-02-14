@@ -1,0 +1,42 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>todo homepage</title>
+  </head>
+
+  <body id="homepage">
+    <h1>TODO</h1>
+    <img src="./images/noteBook.png" width="200px" height="200px" />
+    <div class="signInBlock">
+      <form action="signIn" method="POST">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          class="inputBlock"
+          required=""
+        />
+        <input
+          type="text"
+          name="username"
+          placeholder="UserName"
+          class="inputBlock"
+          required=""
+        />
+        <br />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          class="inputBlock"
+          required=""
+        />
+        <br />
+        <input type="submit" value="Sign In" class="submitBlock" />
+      </form>
+      <a href="login.html" class="signInLink">Already have an account</a>
+    </div>
+  </body>
+</html>
