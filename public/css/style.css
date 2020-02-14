@@ -4,17 +4,17 @@
   background-color: rgba(200, 200, 200, 0.5);
 }
 
-.loginBlock{
+.loginBlock {
   width: 30vw;
   height: 33vh;
   margin: 5vh 0 0 23vw;
   padding-top: 3vh;
-  border: solid rgba(0, 0, 0,0.2) 1px;
+  border: solid rgba(0, 0, 0, 0.2) 1px;
   border-radius: 5px;
   background-color: rgba(200, 200, 200, 0.2);
 }
-.loginBlock:hover{
-  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5)
+.loginBlock:hover {
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5);
 }
 .inputBlock {
   width: 20vw;
@@ -24,7 +24,7 @@
   font-size: 18px;
   font-weight: 200;
   border: none;
-  border-bottom: solid rgba(0, 0, 0,0.2) 1px;
+  border-bottom: solid rgba(0, 0, 0, 0.2) 1px;
   outline: none;
   background: transparent;
 }
@@ -41,12 +41,12 @@
   border-radius: 50px;
   outline: none;
 }
-.signInLink{
+.signInLink {
   text-decoration: none;
   font-size: 1.5em;
   color: rgba(0, 0, 0, 0.6);
 }
-.signInLink:hover{
+.signInLink:hover {
   color: rgba(0, 0, 0, 1);
 }
 .body {
@@ -83,13 +83,13 @@
   background-color: #444444;
 }
 
-.textBox{
+.textBox {
   height: 2vh;
   width: 15vw;
   font-size: 1em;
   outline: none;
 }
-.newTodo{
+.newTodo {
   margin: 1vh 0 0 1vw;
   height: 5vh;
 }
@@ -112,7 +112,7 @@
   height: 30px;
   margin-left: 1vw;
 }
-.todoTitle{
+.todoTitle {
   height: 3vh;
   background-color: #555555;
   margin: 1vh;
@@ -121,8 +121,8 @@
   font-size: 1.2em;
   outline: none;
 }
-.myTasks:hover{
-  box-shadow: 0 0 7px 1px rgba(255, 255, 255, 0.5)
+.myTasks:hover {
+  box-shadow: 0 0 7px 1px rgba(255, 255, 255, 0.5);
 }
 .taskName {
   min-width: 60%;
@@ -139,8 +139,8 @@
   color: white;
 }
 
-.myTasks{
-  margin:5vh 0 0 10vw;
+.myTasks {
+  margin: 5vh 0 0 10vw;
   padding: 2vw;
   border: solid gray 1px;
   border-radius: 5px;
@@ -149,7 +149,7 @@
 .display {
   display: flex;
 }
-.todoTask:hover > img{
+.todoTask:hover > img {
   display: inline;
 }
 .check {
@@ -190,13 +190,13 @@
   margin: 2% 0 0 0;
 }
 
-.header{
+.header {
   height: 7vh;
   display: flex;
   flex-direction: row;
 }
 
-.appHeading{
+.appHeading {
   margin-left: 3vw;
   font-weight: 500;
 }
@@ -229,18 +229,11 @@
   background-color: transparent;
   font-size: 24px;
 }
-
-.editIcon {
-  padding-left: 1vw;
-}
-.editIcon > img{
-  height: 3vh;
-}
-.title{
+.title {
   font-size: 1.5em;
   outline: none;
 }
-.highlight{
+.highlight {
   background-color: rgba(128, 128, 128, 0.8);
 }
 
@@ -249,6 +242,6 @@
 .sideBar > img,
 .minus:hover,
 #saveTitle,
-.submitBlock{
+.submitBlock {
   cursor: pointer;
 }

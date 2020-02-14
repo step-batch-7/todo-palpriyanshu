@@ -37,9 +37,6 @@ const todoBlockAsHtml = function({id, title, tasks}, searchText) {
       <span class="title" contenteditable="true" onblur="editTitle('${id}',this)">
         ${highlightText(title, searchText)}
       </span>
-      <div class="editIcon">
-        <img src="../images/pencil.png" alt="image not found"/>
-      </div>
     </div>
     <div id="taskInput" class="display">
       <input placeholder="add Task" type="text" class="task" required />
