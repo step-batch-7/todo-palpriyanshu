@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" />
-    <script src="../js/xhr.js"></script>
+    <script src="./js/index.js"></script>
     <title>todo</title>
   </head>
 
@@ -23,7 +22,13 @@
         <p>Todo Lists</p>
       </div>
       <div class="newTodo">
-        <input placeholder="add Title" type="text" id="titlePlace" class="textBox" required />
+        <input
+          placeholder="add Title"
+          type="text"
+          id="titlePlace"
+          class="textBox"
+          required
+        />
         <input type="button" value="save" id="saveTitle" />
       </div>
       <div class="dialogBox hidden">
@@ -40,5 +45,4 @@
       <img src="../images/folder.png" width="50px" id="fold" />
     </div>
   </body>
-
 </html>
