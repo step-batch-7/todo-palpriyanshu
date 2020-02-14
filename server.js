@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const {
   serveTodoPage,
-  serveLoginPage,
   loginUser,
+  signInUser,
   serveStaticFiles,
   saveTodo,
   deleteTodo,
@@ -30,12 +30,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.get('/todo', serveTodoPage);
-app.get('/login.html', serveLoginPage);
-app.post('/login', loginUser);
 app.get('/', (req, res) => res.redirect('/todo'));
 app.get('', serveStaticFiles);
 app.get('', notFound);
 
+app.post('/login', loginUser);
+app.post('/signIn', signInUser);
 app.post('/saveTitle', saveTodo);
 app.delete('/deleteAllTodo', deleteTodo);
 app.post('/saveTask', saveTask);
