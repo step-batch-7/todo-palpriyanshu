@@ -1,70 +1,61 @@
 [
   {
-    "id": "T_1581166399023",
-    "title": "Food Items",
-    "tasks": [
+    "name": "santhosh",
+    "username": "kumar",
+    "password": 123,
+    "todoLists": [
       {
-        "id": "T_639",
-        "name": "Rasogulla",
-        "done": false
+        "id": "T_1581166399023",
+        "title": "Food Items",
+        "tasks": [
+          {
+            "id": "T_639",
+            "name": "Rasogulla",
+            "done": false
+          },
+          {
+            "id": "T_737",
+            "name": "Jalebi",
+            "done": false
+          },
+          {
+            "id": "T_554",
+            "name": "Icecream",
+            "done": false
+          }
+        ]
       },
       {
-        "id": "T_737",
-        "name": "Jalebi",
-        "done": false
+        "id": "T_1581166471934",
+        "title": "Shopping",
+        "tasks": [
+          {
+            "id": "T_613",
+            "name": "buy dress",
+            "done": true
+          },
+          {
+            "id": "T_161",
+            "name": "buy gifts",
+            "done": false
+          }
+        ]
       },
       {
-        "id": "T_554",
-        "name": "Icecream",
-        "done": false
-      }
-    ]
-  },
-  {
-    "id": "T_1581166471934",
-    "title": "Shopping",
-    "tasks": [
-      {
-        "id": "T_613",
-        "name": "buy dress",
-        "done": true
-      },
-      {
-        "id": "T_161",
-        "name": "buy gifts",
-        "done": false
-      }
-    ]
-  },
-  {
-    "id": "T_1581167075469",
-    "title": "games",
-    "tasks": [
-      {
-        "id": "T_946",
-        "name": "cricket",
-        "done": false
-      },
-      {
-        "id": "T_63",
-        "name": "table Tennis",
-        "done": false
-      }
-    ]
-  },
-  {
-    "id": "T_1581167268084",
-    "title": "homeWork",
-    "tasks": [
-      {
-        "id": "T_917",
-        "name": "Maths",
-        "done": false
-      },
-      {
-        "id": "T_167",
-        "name": "English",
-        "done": false
+        "id": "T_1581167075469",
+        "title": "games",
+        "tasks": [
+          {
+            "id": "T_946",
+            "name": "cricket",
+            "done": false
+          },
+          {
+            "id": "T_63",
+            "name": "table Tennis",
+            "done": false
+          }
+        ]
       }
     ]
   }
