@@ -181,4 +181,16 @@ const attachClickEventListeners = () => {
   getElement('.searchBar').addEventListener('keyup', filterTodo);
 };
 
-window.onload = attachClickEventListeners;
+const listTodos = function() {
+  const todos = JSON.parse(this.response);
+  todos.forEach(todo => addToTodoList(todo));
+};
+
+const loadTodos = () => newRequest('GET', 'serveTodos', listTodos, '');
+
+const main = () => {
+  attachClickEventListeners();
+  loadTodos();
+};
+
+window.onload = main;
