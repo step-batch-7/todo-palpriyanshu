@@ -1,2 +1,2 @@
+cat ./test/resources/sampleTodoStore.json >> ./test/resources/todoStore.json
 export DATA_STORE=./test/resources/todoStore.json;
-export SAMPLE_TODO=./test/resources/sampleTodoStore.json;
