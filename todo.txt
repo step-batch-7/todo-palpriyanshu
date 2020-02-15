@@ -6,24 +6,30 @@
         mechanism to mark an item as done and undone
   
 ## dataStructure ##
-  [
+[{
+  name:priyanshu,
+  username:palPriyanshu,
+  password:123,
+  todoLists: [
     {
       id:1
       title :shopping;
-      items : [{id:1, item: buy dress, done: true}, {id:2, item:buy shoes, done: false}]
+      tasks : [{id:1, item: buy dress, done: true}, {id:2, item:buy shoes, done: false}]
     },
     {
       id:2
       title :attend wedding;
-      items : [{id:1, item:book tickets, done: true}, {id:2, item:buy shagun gift, done:false }]
+      tasks : [{id:1, item:book tickets, done: true}, {id:2, item:buy shagun gift, done:false }]
     },
   ]
+  }
+]
 
 ## save todoList
   data
     {
       title :come back for work;
-      items : [{item: book tickets, done: true}]
+      tasks : [{item: book tickets, done: true}]
     }
   take older todoList 
   append this data to older todoList
@@ -52,6 +58,20 @@
 --done-- Search by title:  Search the list by its title words.
 --done-- Search by tasks: Search the todo item by its matched words.
 
-User Todo's: A user can log in and log out off their account and work on their own todos.
-Home Page: If not logged in it is a login page else it is the user's todo page/dashboard.
+--done-- add login mechanism
+--done-- add signIn mechanism
+--done-- Home Page: If not logged in it is a login page else it is the user's todo page/dashboard.
+--done-- User Todo's: A user can log in their account and work on their own todos.
+
+add logout mechanism
+use enter key press event to save title name
+provide msg for user if user had not logged in
+increase size of every textBox in frontEnd
+increase size of add(+) and delete(-) symbol
+
+*  before after signIn the logIn Page should open
+*  ensure if user has already Signed in or not with same username and password during signIn
+*  validation of user during login
+
+
 
