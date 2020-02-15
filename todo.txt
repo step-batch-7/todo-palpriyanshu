@@ -68,10 +68,6 @@ use enter key press event to save title name
 provide msg for user if user had not logged in
 increase size of every textBox in frontEnd
 increase size of add(+) and delete(-) symbol
-
-*  before after signIn the logIn Page should open
-*  ensure if user has already Signed in or not with same username and password during signIn
-*  validation of user during login
-
+--done-- remove html from todo class
 
 
