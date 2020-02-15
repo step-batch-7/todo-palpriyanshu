@@ -62,12 +62,13 @@
 --done-- add signIn mechanism
 --done-- Home Page: If not logged in it is a login page else it is the user's todo page/dashboard.
 --done-- User Todo's: A user can log in their account and work on their own todos.
+--done-- remove html from todo class
+--done-- add logout mechanism
 
-add logout mechanism
+remove scroller from side bar in frontEnd
 use enter key press event to save title name
 provide msg for user if user had not logged in
 increase size of every textBox in frontEnd
 increase size of add(+) and delete(-) symbol
---done-- remove html from todo class
 
 
