@@ -1,6 +1,6 @@
 const request = require('supertest');
 const sinon = require('sinon');
-const {truncateSync, readFileSync, writeFileSync} = require('fs');
+const {truncateSync} = require('fs');
 const config = require('../config.js');
 const {sessionManager} = require('../lib/responses');
 
