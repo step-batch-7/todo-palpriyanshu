@@ -78,11 +78,9 @@
   height: 99.9vh;
   border: 0.5px solid black;
   background-color: #222222;
-  overflow-y: scroll;
 }
 
 .sideBar {
-  width: 50px;
   height: 99.9vh;
   border: 0.5px solid black;
   background-color: #444444;
@@ -139,7 +137,6 @@
   font-weight: 200;
   border: none;
   outline: none;
-  /* border-bottom: 1px solid #aaa; */
   background-color: transparent;
   color: white;
 }
