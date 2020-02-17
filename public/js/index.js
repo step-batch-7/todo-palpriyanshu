@@ -31,14 +31,16 @@ const highlightText = (text, searchText) => {
 const tasksAsHtml = function(todoId, tasks, searchText) {
   return tasks
     .map(({id, name, done}) => {
-      return `<div class="display todoTask" id="${id}">
+      return `
+    <div class="display todoTask ${done ? 'checkedTaskName' : ''}" id="${id}">
     <input type="checkBox" class="check" onclick="updateStatus()" ${
       done ? 'checked' : ''
     }>
-    <div class="taskName" contenteditable="true" onblur="editTask('${todoId}','${id}',this)">
+    <div class="taskName" 
+      contenteditable="true" onblur="editTask('${todoId}','${id}',this)">
       ${highlightText(name, searchText)}
     </div>
-    <img src="../images/minus.png" class="titleImg minus" onclick="deleteTask()">
+    <img src="../images/delete.png" class="minus" onclick="deleteTask()">
   </div>`;
     })
     .join('\n');
@@ -137,7 +139,11 @@ const updateStatus = function() {
   const myTasks = getElement('.myTasks');
   const titleId = myTasks.id.split('.').pop();
   const taskId = event.target.parentElement.id;
-  newRequest('PATCH', 'updateTaskStatus', true, {titleId, taskId});
+  const callBack = () => {
+    const task = getElement(`#${taskId}`);
+    task.classList.toggle('checkedTaskName');
+  };
+  newRequest('PATCH', 'updateTaskStatus', callBack, {titleId, taskId});
 };
 
 const editTitle = function(todoId, titleDivision) {
