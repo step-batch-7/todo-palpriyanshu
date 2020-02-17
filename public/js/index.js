@@ -25,7 +25,7 @@ const highlightText = (text, searchText) => {
     text = text.toLowerCase();
   }
   const highlightedText = `<span class="highlight">${searchText}</span>`;
-  return text.replace(searchText, highlightedText);
+  return text.replace(new RegExp(searchText, 'g'), highlightedText);
 };
 
 const tasksAsHtml = function(todoId, tasks, searchText) {
