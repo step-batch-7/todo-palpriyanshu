@@ -10,6 +10,10 @@ const show = selector => getElement(selector).classList.remove('hidden');
 const erase = id => document.getElementById(id).remove();
 
 const highlightText = (text, searchText) => {
+  if (searchText) {
+    searchText = searchText.toLowerCase();
+    text = text.toLowerCase();
+  }
   const highlightedText = `<span class="highlight">${searchText}</span>`;
   return text.replace(searchText, highlightedText);
 };

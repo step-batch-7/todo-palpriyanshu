@@ -17,6 +17,10 @@
 .loginBlock:hover {
   box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5);
 }
+.errorMessage {
+  font-size: 1.2em;
+  color: rgb(199, 0, 0);
+}
 .inputBlock {
   width: 20vw;
   height: 25px;

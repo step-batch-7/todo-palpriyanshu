@@ -53,7 +53,7 @@ describe('GET', function() {
         .set('Accept', '*/*')
         .set('Cookie', 'sessionId=SID_123')
         .expect('content-type', /html/)
-        .expect('content-length', '949')
+        .expect('content-length', '1020')
         .expect(STATUS_CODES.ok, done);
     });
 
