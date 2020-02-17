@@ -1,89 +1,30 @@
-#homepage {
-  text-align: center;
-  margin: 0px 150px;
-  background-color: rgba(200, 200, 200, 0.5);
-}
-
-.loginBlock,
-.signInBlock {
-  width: 30vw;
-  margin: 5vh 0 0 23vw;
-  padding-top: 3vh;
-  padding-bottom: 5vh;
-  border: solid rgba(0, 0, 0, 0.2) 1px;
-  border-radius: 5px;
-  background-color: rgba(200, 200, 200, 0.2);
-}
-.loginBlock:hover {
-  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5);
-}
-.errorMessage {
-  font-size: 1.2em;
-  color: rgb(199, 0, 0);
-}
-.inputBlock {
-  width: 20vw;
-  height: 25px;
-  margin: 3vh 0 0 0;
-  padding: 5px;
-  font-size: 18px;
-  font-weight: 200;
-  border: none;
-  border-bottom: solid rgba(0, 0, 0, 0.2) 1px;
-  outline: none;
-  background: transparent;
-}
-
-.submitBlock {
-  width: 20vw;
-  height: 3vh;
-  margin: 6vh 0 4vh 0;
-  padding: 0;
-  font-size: 18px;
-  font-weight: 300;
-  background-color: rgba(200, 200, 200, 0.8);
-  border: 1px solid #bbb;
-  border-radius: 50px;
-  outline: none;
-}
-.signInLink {
-  text-decoration: none;
-  font-size: 1.5em;
-  color: rgba(0, 0, 0, 0.6);
-}
-.signInLink:hover {
-  color: rgba(0, 0, 0, 1);
-}
 .body {
-  background-color: gray;
   font-family: Arial, Helvetica, sans-serif;
-  color: white;
   margin: 0;
   display: flex;
   text-align: left;
   justify-content: end;
+  background-color: rgba(200, 200, 200, 0.5);
+  color: rgba(0, 0, 0, 0.8);
   font-weight: normal;
 }
 
 #textArea {
   width: 100vw;
   height: 99.9vh;
-  border: 0.5px solid black;
-  background-color: #222222;
+  /* border: 0.5px solid black; */
   overflow-y: scroll;
 }
 
-#index {
+#indexBar {
   width: 35vw;
   height: 99.9vh;
-  border: 0.5px solid black;
-  background-color: #222222;
+  background-color: rgba(200, 200, 200, 0.6);
 }
 
 .sideBar {
-  height: 99.9vh;
-  border: 0.5px solid black;
-  background-color: #444444;
+  height: 100vh;
+  background-color: rgba(147, 147, 147, 0.6);
 }
 
 .textBox {
@@ -98,18 +39,17 @@
 }
 
 #titleBar {
-  width: 100%;
-  height: 5%;
+  height: 3.6vh;
   font-size: 1.5em;
   font-weight: 200;
-  background-color: #444444;
+  background-color: rgba(142, 139, 139, 0.8);
   margin: 0;
   display: flex;
   justify-content: space-between;
   padding: 0 0 2vh 1vw;
 }
 
-#saveTitle {
+.button {
   -webkit-appearance: button;
   font-size: 1em;
   height: 30px;
@@ -117,28 +57,15 @@
 }
 .todoTitle {
   height: 3vh;
-  background-color: #555555;
   margin: 1vh;
   padding: 0.5vh 0 0 1vw;
-  color: white;
   font-size: 1.2em;
   outline: none;
+  background-color: rgba(182, 178, 178, 0.6);
 }
+
 .myTasks:hover {
   box-shadow: 0 0 7px 1px rgba(255, 255, 255, 0.5);
-}
-.taskName {
-  min-width: 60%;
-  height: 20px;
-  margin: 0 3% 10px 15px;
-  padding: 5px;
-  padding-top: 15px;
-  font-size: 20px;
-  font-weight: 200;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  color: white;
 }
 
 .myTasks {
@@ -153,6 +80,7 @@
 }
 .todoTask:hover > img {
   display: inline;
+  border-bottom: solid gray 1px;
 }
 .check {
   margin-top: 1.5vh;
@@ -161,6 +89,7 @@
 
 #addButton {
   margin: 0 5px 0;
+  height: 3vh;
 }
 
 .hidden {
@@ -213,37 +142,126 @@
   font-size: 24px;
   font-weight: 200;
   word-spacing: 10px;
-  color: #ccc;
+  color: black;
+  background-color: transparent;
+}
+.taskName {
+  width: 33vw;
+  padding: 5px;
+  padding-top: 1.7vh;
+  font-size: 1.3em;
+  font-weight: 200;
+  border: none;
+  outline: none;
   background-color: transparent;
 }
 
 .task {
-  margin-left: 25%;
+  margin-left: 2.5vw;
   width: 30%;
-  color: #ccc;
-  outline: none;
-  font-size: 8px;
-  word-spacing: 10px;
-  font-weight: 200;
-  border: none;
-  position: relative;
   border-bottom: 1px solid #aaa;
-  background-color: transparent;
-  font-size: 24px;
 }
 .title {
   font-size: 1.5em;
   outline: none;
 }
 .highlight {
-  background-color: rgba(128, 128, 128, 0.8);
+  background-color: rgba(136, 135, 135, 0.8);
 }
 
 .check,
 #addButton,
 .sideBar > img,
 .minus:hover,
-#saveTitle,
+.button,
+.todoTitle,
 .submitBlock {
   cursor: pointer;
+}
+
+#popUpDivision {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(143, 143, 143, 0.7);
+  display: none;
+}
+.popUpBox {
+  border: solid rgba(0, 0, 0, 0.2) 1px;
+  border-radius: 8px;
+  margin-left: 35vw;
+  padding: 2vw;
+  position: relative;
+  width: 20vw;
+  top: 20vh;
+  font-size: 1.3em;
+  animation: animatezoom 0.6s;
+  background: rgb(154, 154, 154);
+  color: black;
+}
+.popUpBox:hover,
+.todoTitle:hover {
+  box-shadow: 0 0 7px 1px rgba(101, 99, 99, 0.5);
+}
+
+.arrow {
+  margin-left: 1vw;
+  height: 4vh;
+}
+/* login and signIn page styles */
+
+.homepage {
+  text-align: center;
+  margin: 0px 150px;
+  font-family: sans-serif;
+  background-color: rgba(200, 200, 200, 0.5);
+}
+.loginBlock,
+.signInBlock {
+  width: 30vw;
+  margin: 5vh 0 0 23vw;
+  padding: 3vh 0 5vh 0;
+  border: solid rgba(0, 0, 0, 0.2) 1px;
+  border-radius: 5px;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+.loginBlock:hover {
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5);
+}
+.errorMessage {
+  font-size: 1.2em;
+  color: rgb(199, 0, 0);
+}
+.inputBlock {
+  width: 20vw;
+  margin: 3vh 0 0 0;
+  padding: 1vh 0 0.5vh 0.5vw;
+  font-size: 1.2em;
+  font-weight: 200;
+  border: none;
+  outline: none;
+  border-bottom: solid rgba(0, 0, 0, 0.2) 1px;
+  background: transparent;
+}
+
+.submitBlock {
+  width: 20vw;
+  height: 3vh;
+  margin: 6vh 0 4vh 0;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 300;
+  background-color: rgba(200, 200, 200, 0.8);
+  border: 1px solid #bbb;
+  border-radius: 50px;
+  outline: none;
+}
+.signInLink {
+  text-decoration: none;
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.signInLink:hover {
+  color: rgba(0, 0, 0, 1);
 }

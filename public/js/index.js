@@ -9,6 +9,16 @@ const show = selector => getElement(selector).classList.remove('hidden');
 
 const erase = id => document.getElementById(id).remove();
 
+const togglePopUp = () => {
+  const popUpDivision = getElement('#popUpDivision');
+  const displayValue = popUpDivision.style.display;
+  if (displayValue === 'none') {
+    popUpDivision.style.display = 'block';
+    return;
+  }
+  popUpDivision.style.display = 'none';
+};
+
 const highlightText = (text, searchText) => {
   if (searchText) {
     searchText = searchText.toLowerCase();
@@ -42,13 +52,13 @@ const todoBlockAsHtml = function({id, title, tasks}, searchText) {
         ${highlightText(title, searchText)}
       </span>
     </div>
-    <div id="taskInput" class="display">
-      <input placeholder="add Task" type="text" class="task" required />
-      <img src="../images/plus.png" class="titleImg" id="addButton" onclick = "addNewTask('${id}')"/>
-    </div>
     <br />
     <br />
     <div id="todo">${tasksAsHtml(id, tasks, searchText)} </div>
+    <div id="taskInput" class="display">
+      <input placeholder="add Task" type="text" class="taskName task" required />
+      <img src="../images/plus.png" id="addButton" onclick = "addNewTask('${id}')"/>
+  </div>
   </div>`;
 };
 
@@ -173,13 +183,18 @@ const newRequest = function(method, url, callBack, reqMsg) {
   req.send(JSON.stringify(reqMsg));
 };
 
-const renderIndex = function() {
-  const index = getElement('#index');
-  index.classList.toggle('hidden');
+const toggleIndexBar = function() {
+  const indexBar = getElement('#indexBar');
+  const leftArrow = getElement('#leftArrow');
+  const rightArrow = getElement('#rightArrow');
+  indexBar.classList.toggle('hidden');
+  leftArrow.classList.toggle('hidden');
+  rightArrow.classList.toggle('hidden');
 };
 
 const attachClickEventListeners = () => {
-  getElement('#fold').addEventListener('click', renderIndex);
+  getElement('#leftArrow').addEventListener('click', toggleIndexBar);
+  getElement('#rightArrow').addEventListener('click', toggleIndexBar);
   getElement('#saveTitle').addEventListener('click', createTodo);
   getElement('#allTodos').addEventListener('dblclick', showDeleteDialogBox);
   getElement('.searchBar').addEventListener('keyup', filterTodo);
