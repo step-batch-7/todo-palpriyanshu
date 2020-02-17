@@ -64,11 +64,14 @@
 --done-- User Todo's: A user can log in their account and work on their own todos.
 --done-- remove html from todo class
 --done-- add logout mechanism
+--done-- provide error msg for user if user had not logged in
+--done-- provide error msg for signIn page if user already exist
 
 remove scroller from side bar in frontEnd
 use enter key press event to save title name
-provide msg for user if user had not logged in
 increase size of every textBox in frontEnd
 increase size of add(+) and delete(-) symbol
+remove html text from task textBox in frontEnd
+remove dark background from dashBoard
 
 
