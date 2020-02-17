@@ -53,7 +53,7 @@ describe('GET', function() {
         .set('Accept', '*/*')
         .set('Cookie', 'sessionId=SID_123')
         .expect('content-type', /html/)
-        .expect('content-length', '1020')
+        .expect('content-length', '1023')
         .expect(STATUS_CODES.ok, done);
     });
 
@@ -80,13 +80,13 @@ describe('GET', function() {
   });
 
   context('request for png file', function() {
-    it('should respond with image when url is "/images/folder.png"', function(done) {
+    it('should respond with image when url is "/images/plus.png"', function(done) {
       request(app)
-        .get('/images/folder.png')
+        .get('/images/plus.png')
         .set('Accept', '*/*')
         .set('Cookie', 'sessionId=SID_123')
         .expect('content-type', /png/)
-        .expect('content-length', '4616')
+        .expect('content-length', '18868')
         .expect(STATUS_CODES.ok, done);
     });
   });
