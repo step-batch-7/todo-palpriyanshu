@@ -12,7 +12,6 @@
 #textArea {
   width: 100vw;
   height: 99.9vh;
-  /* border: 0.5px solid black; */
   overflow-y: scroll;
 }
 
@@ -23,7 +22,8 @@
 }
 
 .sideBar {
-  height: 100vh;
+  height: 97vh;
+  padding: 2vh 1vw 1vh 1vw;
   background-color: rgba(147, 147, 147, 0.6);
 }
 
@@ -54,8 +54,19 @@
   font-size: 1em;
   height: 30px;
   margin-left: 1vw;
+  background-color: lightgray;
+}
+.saveButton {
+  -webkit-appearance: button;
+  font-size: 1em;
+  height: 30px;
+  margin-left: 1vw;
+  background-color: rgb(228, 228, 228);
 }
 .todoTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   height: 3vh;
   margin: 1vh;
   padding: 0.5vh 0 0 1vw;
@@ -63,7 +74,14 @@
   outline: none;
   background-color: rgba(182, 178, 178, 0.6);
 }
-
+.todoTitle:hover {
+  box-shadow: 0 0 7px 1px rgba(255, 255, 255, 0.5);
+}
+.bin {
+  height: 2.5vh;
+  margin-right: 1vw;
+  display: none;
+}
 .myTasks:hover {
   box-shadow: 0 0 7px 1px rgba(255, 255, 255, 0.5);
 }
@@ -78,7 +96,8 @@
 .display {
   display: flex;
 }
-.todoTask:hover > img {
+.todoTask:hover > img,
+.todoTitle:hover > div > img {
   display: inline;
 }
 
@@ -171,7 +190,8 @@
 .minus:hover,
 .button,
 .todoTitle,
-.submitBlock {
+.submitBlock,
+.saveButton {
   cursor: pointer;
 }
 
@@ -180,7 +200,7 @@
   top: 0;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(143, 143, 143, 0.7);
+  background-color: rgba(171, 171, 171, 0.4);
   display: none;
 }
 .popUpBox {
@@ -193,11 +213,10 @@
   top: 20vh;
   font-size: 1.3em;
   animation: animatezoom 0.6s;
-  background: rgb(154, 154, 154);
+  background: rgba(179, 179, 179, 0.3);
   color: black;
 }
-.popUpBox:hover,
-.todoTitle:hover {
+.popUpBox:hover {
   box-shadow: 0 0 7px 1px rgba(101, 99, 99, 0.5);
 }
 
@@ -210,7 +229,7 @@
 .homepage {
   text-align: center;
   margin: 0px 150px;
-  font-family: sans-serif;
+  font-family: 'Arial', sans-serif;
   background-color: rgba(200, 200, 200, 0.5);
 }
 .loginBlock,

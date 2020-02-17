@@ -26,9 +26,10 @@
           type="text"
           id="titlePlace"
           class="textBox"
+          onkeyup="createNewTodo(this)"
           required
         />
-        <input type="button" value="save" id="saveTitle" class="button" />
+        <input type="button" value="save" id="saveTitle" class="saveButton" />
       </div>
       <div class="dialogBox hidden">
         <div class="title">Are you sure to delete</div>

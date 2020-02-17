@@ -20,10 +20,11 @@ const togglePopUp = () => {
 };
 
 const highlightText = (text, searchText) => {
-  if (searchText) {
-    searchText = searchText.toLowerCase();
-    text = text.toLowerCase();
+  if (!searchText) {
+    return text;
   }
+  searchText = searchText.toLowerCase();
+  text = text.toLowerCase();
   const highlightedText = `<span class="highlight">${searchText}</span>`;
   return text.replace(new RegExp(searchText, 'g'), highlightedText);
 };
@@ -58,7 +59,7 @@ const todoBlockAsHtml = function({id, title, tasks}, searchText) {
     <br />
     <div id="todo">${tasksAsHtml(id, tasks, searchText)} </div>
     <div id="taskInput" class="display">
-      <input placeholder="add Task" type="text" class="taskName task" required />
+      <input placeholder="add Task" type="text" class="taskName task" required onkeyup="addTask('${id}')"/>
       <img src="../images/plus.png" id="addButton" onclick = "addNewTask('${id}')"/>
   </div>
   </div>`;
@@ -78,7 +79,10 @@ const displayTodo = function(todoId) {
 const addToTodoList = function({id, title}) {
   const todoLists = getElement('#allTodos');
   const html = `<div class="todoTitle" id="${id}" onclick="displayTodo('${id}')">
-     ${title} 
+     <div>${title}</div>
+     <div> 
+      <img src="./images/bin.png" alt="no image" onclick="showDeleteDialogBox('${id}')" class="bin"/>
+     </div>
      </div>`;
   todoLists.innerHTML += html;
 };
@@ -86,6 +90,7 @@ const addToTodoList = function({id, title}) {
 const createTodo = function() {
   const textBox = getElement('#titlePlace');
   const title = textBox.value;
+  if (title == '') return;
   textBox.value = '';
   const callBack = function() {
     if (this.status === 200) {
@@ -93,6 +98,11 @@ const createTodo = function() {
     }
   };
   newRequest('POST', 'saveTitle', callBack, {title});
+};
+
+const createNewTodo = function(textBox) {
+  if (event.key === 'Enter') createTodo();
+  return;
 };
 
 const deleteTodo = function(todoId) {
@@ -105,10 +115,9 @@ const deleteTodo = function(todoId) {
   hide('.dialogBox');
 };
 
-const showDeleteDialogBox = function() {
-  const id = event.target.id;
+const showDeleteDialogBox = function(todoId) {
   show('.dialogBox');
-  getElement('.delete').setAttribute('onclick', `deleteTodo('${id}')`);
+  getElement('.delete').setAttribute('onclick', `deleteTodo('${todoId}')`);
   getElement('.cancel').setAttribute('onclick', 'hide(".dialogBox")');
 };
 
@@ -118,6 +127,7 @@ const addNewTask = function(todoId) {
   const taskInput = getChildElement(todoDivision, '#taskInput');
   const textBox = getChildElement(taskInput, '.task');
   const name = textBox.value;
+  if (name === '') return;
   textBox.value = '';
   const callBack = function() {
     const task = JSON.parse(this.response);
@@ -127,6 +137,10 @@ const addNewTask = function(todoId) {
   newRequest('POST', 'saveTask', callBack, {name, todoId});
 };
 
+const addTask = todoId => {
+  if (event.key === 'Enter') addNewTask(todoId);
+  return;
+};
 const deleteTask = function() {
   const myTasks = getElement('.myTasks');
   const todoId = myTasks.id.split('.').pop();
@@ -202,7 +216,7 @@ const attachClickEventListeners = () => {
   getElement('#leftArrow').addEventListener('click', toggleIndexBar);
   getElement('#rightArrow').addEventListener('click', toggleIndexBar);
   getElement('#saveTitle').addEventListener('click', createTodo);
-  getElement('#allTodos').addEventListener('dblclick', showDeleteDialogBox);
+  // getElement('#titlePlace').addEventListener('keyup', createTodo);
   getElement('.searchBar').addEventListener('keyup', filterTodo);
 };
 
