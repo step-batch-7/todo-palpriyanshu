@@ -26,7 +26,6 @@
           type="text"
           id="titlePlace"
           class="textBox"
-          onkeyup="createNewTodo(this)"
           required
         />
         <input type="button" value="save" id="saveTitle" class="saveButton" />
@@ -46,7 +45,7 @@
       <img src="../images/leftArrow.png" id="leftArrow" class="arrow hidden" />
       <img src="../images/rightArrow.png" id="rightArrow" class="arrow" />
     </div>
-    <div id="popUpDivision">
+    <div id="popUpDivision" class="hidden">
       <div class="popUpBox animateZoom">
         Are you sure to Log out?
         <br />

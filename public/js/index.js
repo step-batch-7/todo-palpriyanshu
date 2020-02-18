@@ -11,12 +11,7 @@ const erase = id => document.getElementById(id).remove();
 
 const togglePopUp = () => {
   const popUpDivision = getElement('#popUpDivision');
-  const displayValue = popUpDivision.style.display;
-  if (displayValue === 'none') {
-    popUpDivision.style.display = 'block';
-    return;
-  }
-  popUpDivision.style.display = 'none';
+  popUpDivision.classList.toggle('hidden');
 };
 
 const highlightText = (text, searchText) => {
@@ -89,7 +84,8 @@ const addToTodoList = function({id, title}) {
 
 const createTodo = function() {
   const textBox = getElement('#titlePlace');
-  const title = textBox.value;
+  let title = textBox.value.replace(/>/g, '&gt;');
+  title = textBox.value.replace(/</g, '&lt;');
   if (title == '') return;
   textBox.value = '';
   const callBack = function() {
@@ -100,7 +96,7 @@ const createTodo = function() {
   newRequest('POST', 'saveTitle', callBack, {title});
 };
 
-const createNewTodo = function(textBox) {
+const createNewTodo = function() {
   if (event.key === 'Enter') createTodo();
   return;
 };
@@ -126,7 +122,8 @@ const addNewTask = function(todoId) {
   const taskDivision = getChildElement(todoDivision, '#todo');
   const taskInput = getChildElement(todoDivision, '#taskInput');
   const textBox = getChildElement(taskInput, '.task');
-  const name = textBox.value;
+  let name = textBox.value.replace(/>/g, '&gt;');
+  name = textBox.value.replace(/</g, '&lt;');
   if (name === '') return;
   textBox.value = '';
   const callBack = function() {
@@ -141,6 +138,7 @@ const addTask = todoId => {
   if (event.key === 'Enter') addNewTask(todoId);
   return;
 };
+
 const deleteTask = function() {
   const myTasks = getElement('.myTasks');
   const todoId = myTasks.id.split('.').pop();
@@ -212,11 +210,11 @@ const toggleIndexBar = function() {
   rightArrow.classList.toggle('hidden');
 };
 
-const attachClickEventListeners = () => {
+const attachEventListeners = () => {
   getElement('#leftArrow').addEventListener('click', toggleIndexBar);
   getElement('#rightArrow').addEventListener('click', toggleIndexBar);
   getElement('#saveTitle').addEventListener('click', createTodo);
-  // getElement('#titlePlace').addEventListener('keyup', createTodo);
+  getElement('#titlePlace').addEventListener('keyup', createNewTodo);
   getElement('.searchBar').addEventListener('keyup', filterTodo);
 };
 
@@ -228,7 +226,7 @@ const listTodos = function() {
 const loadTodos = () => newRequest('GET', 'serveTodos', listTodos, '');
 
 const main = () => {
-  attachClickEventListeners();
+  attachEventListeners();
   loadTodos();
 };
 
