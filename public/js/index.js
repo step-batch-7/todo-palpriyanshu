@@ -18,8 +18,6 @@ const highlightText = (text, searchText) => {
   if (!searchText) {
     return text;
   }
-  searchText = searchText.toLowerCase();
-  text = text.toLowerCase();
   const highlightedText = `<span class="highlight">${searchText}</span>`;
   return text.replace(new RegExp(searchText, 'g'), highlightedText);
 };
@@ -54,7 +52,7 @@ const todoBlockAsHtml = function({id, title, tasks}, searchText) {
     <br />
     <div id="todo">${tasksAsHtml(id, tasks, searchText)} </div>
     <div id="taskInput" class="display">
-      <input placeholder="add Task" type="text" class="taskName task" required onkeyup="addTask('${id}')"/>
+      <input placeholder="Add Task" type="text" class="taskName task" required onkeyup="addTask('${id}')"/>
       <img src="../images/plus.png" id="addButton" onclick = "addNewTask('${id}')"/>
   </div>
   </div>`;
