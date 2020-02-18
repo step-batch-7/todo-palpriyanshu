@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
     <script src="./js/index.js"></script>
+    <script src="./js/instructions.js"></script>
     <title>todo</title>
   </head>
   <body class="body">
     <div id="textArea">
       <div class="header">
-        <h1 class="appHeading">MY TASKS</h1>
+        <h1 class="appHeading">TO DO</h1>
         <input placeholder="Search here" class="searchBar" required />
       </div>
       <div id="myAllTasks"></div>
@@ -39,19 +40,40 @@
     </div>
 
     <div class="sideBar">
-      <img src="../images/logout.png" width="50px" onclick="togglePopUp()" />
+      <img
+        src="../images/logout.png"
+        width="50px"
+        onclick="toggleLogoutPopUp()"
+      />
       <div>__USERNAME__</div>
       <br />
       <img src="../images/leftArrow.png" id="leftArrow" class="arrow hidden" />
       <img src="../images/rightArrow.png" id="rightArrow" class="arrow" />
+      <br />
+      <br />
+      <br />
+      <div>
+        <img
+          src="../images/help.png"
+          alt="no image"
+          class="helpButton"
+          onclick="toggleHelpPopUp()"
+        />
+      </div>
     </div>
-    <div id="popUpDivision" class="hidden">
+    <div id="logoutPopUp" class="popUpDivision hidden">
       <div class="popUpBox animateZoom">
         Are you sure to Log out?
         <br />
         <br />
-        <button onclick="togglePopUp()" class="button">cancel</button>
+        <button onclick="toggleLogoutPopUp()" class="button">cancel</button>
         <a href="/logout"> <button class="button">logout</button> </a>
+      </div>
+    </div>
+    <div id="helpPopUp" class="popUpDivision hidden">
+      <div class="helpBox">
+        <div onclick="toggleHelpPopUp()" class="closeButton">X</div>
+        <div id="helpBox"></div>
       </div>
     </div>
   </body>

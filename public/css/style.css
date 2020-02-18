@@ -195,7 +195,7 @@
   cursor: pointer;
 }
 
-#popUpDivision {
+.popUpDivision {
   position: absolute;
   top: 0;
   height: 100vh;
@@ -215,6 +215,23 @@
   background: rgba(179, 179, 179, 0.3);
   color: black;
 }
+.helpBox {
+  border: solid rgba(0, 0, 0, 0.2) 1px;
+  border-radius: 8px;
+  margin-left: 20vw;
+  padding: 2vw;
+  position: relative;
+  width: 40vw;
+  top: 10vh;
+  font-size: 1.3em;
+  animation: animatezoom 0.6s;
+  background: rgba(179, 179, 179, 0.3);
+  color: black;
+}
+.closeButton {
+  display: flex;
+  flex-direction: row-reverse;
+}
 .popUpBox:hover {
   box-shadow: 0 0 7px 1px rgba(101, 99, 99, 0.5);
 }
@@ -222,6 +239,10 @@
 .arrow {
   margin-left: 1vw;
   height: 4vh;
+}
+.helpButton {
+  margin-left: 1vw;
+  height: 3vh;
 }
 /* login and signIn page styles */
 

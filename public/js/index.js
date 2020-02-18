@@ -9,9 +9,14 @@ const show = selector => getElement(selector).classList.remove('hidden');
 
 const erase = id => document.getElementById(id).remove();
 
-const togglePopUp = () => {
-  const popUpDivision = getElement('#popUpDivision');
-  popUpDivision.classList.toggle('hidden');
+const toggleLogoutPopUp = () => {
+  const logoutPopUp = getElement('#logoutPopUp');
+  logoutPopUp.classList.toggle('hidden');
+};
+
+const toggleHelpPopUp = () => {
+  const logoutPopUp = getElement('#helpPopUp');
+  logoutPopUp.classList.toggle('hidden');
 };
 
 const highlightText = (text, searchText) => {
@@ -226,6 +231,7 @@ const loadTodos = () => newRequest('GET', 'serveTodos', listTodos, '');
 const main = () => {
   attachEventListeners();
   loadTodos();
+  loadInstructions();
 };
 
 window.onload = main;
