@@ -89,7 +89,7 @@ const createTodo = function() {
   const textBox = getElement('#titlePlace');
   let title = textBox.value.replace(/>/g, '&gt;');
   title = textBox.value.replace(/</g, '&lt;');
-  if (title == '') return;
+  if (title.trim() == '') return;
   textBox.value = '';
   const callBack = function() {
     if (this.status === 200) {
