@@ -9,7 +9,7 @@
   "scripts": {
     "test": "(source _test_env; nyc mocha)",
     "watch": "(source  _test_env;  mocha --watch --growl)",
-    "start": "(source _env; node server.js)",
+    "start": "(export DATA_STORE=./dataStore/todoNotes.json; node server.js)",
     "live": "(source _env; nodemon -i dataStore server.js)"
   },
   "repository": {
